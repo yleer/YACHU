@@ -13,6 +13,8 @@
 		88E00AA52612E31E001FDF19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88E00AA32612E31E001FDF19 /* Main.storyboard */; };
 		88E00AA72612E31F001FDF19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88E00AA62612E31F001FDF19 /* Assets.xcassets */; };
 		88E00AAA2612E31F001FDF19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88E00AA82612E31F001FDF19 /* LaunchScreen.storyboard */; };
+		88E00AB92612E505001FDF19 /* YachtModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E00AB82612E505001FDF19 /* YachtModel.swift */; };
+		88E00ABC2612E53C001FDF19 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E00ABB2612E53C001FDF19 /* Dice.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		88E00AA62612E31F001FDF19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88E00AA92612E31F001FDF19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88E00AAB2612E31F001FDF19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88E00AB82612E505001FDF19 /* YachtModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YachtModel.swift; sourceTree = "<group>"; };
+		88E00ABB2612E53C001FDF19 /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,25 @@
 		88E00A9C2612E31E001FDF19 /* YACHU */ = {
 			isa = PBXGroup;
 			children = (
-				88E00A9D2612E31E001FDF19 /* AppDelegate.swift */,
-				88E00A9F2612E31E001FDF19 /* SceneDelegate.swift */,
 				88E00AA12612E31E001FDF19 /* ViewController.swift */,
 				88E00AA32612E31E001FDF19 /* Main.storyboard */,
 				88E00AA62612E31F001FDF19 /* Assets.xcassets */,
-				88E00AA82612E31F001FDF19 /* LaunchScreen.storyboard */,
+				88E00AB82612E505001FDF19 /* YachtModel.swift */,
+				88E00ABB2612E53C001FDF19 /* Dice.swift */,
 				88E00AAB2612E31F001FDF19 /* Info.plist */,
+				88E00AB22612E347001FDF19 /* Supporting Files */,
 			);
 			path = YACHU;
+			sourceTree = "<group>";
+		};
+		88E00AB22612E347001FDF19 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				88E00A9F2612E31E001FDF19 /* SceneDelegate.swift */,
+				88E00AA82612E31F001FDF19 /* LaunchScreen.storyboard */,
+				88E00A9D2612E31E001FDF19 /* AppDelegate.swift */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +152,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				88E00AA22612E31E001FDF19 /* ViewController.swift in Sources */,
+				88E00AB92612E505001FDF19 /* YachtModel.swift in Sources */,
+				88E00ABC2612E53C001FDF19 /* Dice.swift in Sources */,
 				88E00A9E2612E31E001FDF19 /* AppDelegate.swift in Sources */,
 				88E00AA02612E31E001FDF19 /* SceneDelegate.swift in Sources */,
 			);

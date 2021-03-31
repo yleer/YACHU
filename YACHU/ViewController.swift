@@ -15,11 +15,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.rollDice()
-        
-        print(model.totalDice)
-        model.printPossibleOutcomes()
-        
         updateViewFromModel()
     }
     
@@ -29,9 +24,9 @@ class ViewController: UIViewController {
         for index in dices.indices{
             dices[index].text = ""
         }
-        for index in model.totalDice.indices{
+        for index in model.currentDice.indices{
             dices[index].isUserInteractionEnabled = true
-            dices[index].text = String(model.totalDice[index].rawValue)
+            dices[index].text = String(model.currentDice[index].rawValue)
             let tap = UITapGestureRecognizer(target: self, action: #selector(tapToKeep))
             dices[index].addGestureRecognizer(tap)
         }
@@ -54,8 +49,6 @@ class ViewController: UIViewController {
                 model.backToRoll(index: index)
             }
         }
-        print("after remove total : \(model.totalDice)")
-        print("after remove save : \(model.tmpSave)")
         updateViewFromModel()
     }
     
@@ -71,9 +64,9 @@ class ViewController: UIViewController {
     
     @IBAction func rollDice(_ sender: UIButton) {
         model.rollDice()
-        print(model.totalDice)
-        model.printPossibleOutcomes()
+//        model.printPossibleOutcomes()
         updateViewFromModel()
     }
 }
 
+// 내일은 좀 주사위 돌리기 가능하게 하기. 스몰스트레이트 해결하기.

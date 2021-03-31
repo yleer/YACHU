@@ -8,12 +8,13 @@
 import Foundation
 
 struct YachtModel {
-    // currentDices는 5 - tmpSave
-    var currentDices : [Dice] = []
+    // totalDice
+    var totalDice : [Dice] = []
     var tmpSave : [Dice] = []
-    var totalDice : [Dice] = []{
+    // currentDice 는 5 - tmpSave
+    var currentDice : [Dice] = []{
         didSet{
-            totalDice.sort { (first, second) -> Bool in
+            currentDice.sort { (first, second) -> Bool in
                 return first.rawValue < second.rawValue
             }
         }
@@ -50,19 +51,21 @@ struct YachtModel {
     var tmpLargeStrait = 0
     
     var tmpYatchu = 0
-
-    
     
     var rollTime = 0
     
     mutating func rollDice(){
-        clean()
-        totalDice = []
-        
-        for _ in 0 ..< 5 - tmpSave.count{
-            totalDice.append(Dice.randomDice())
+        if rollTime < 3{
+            clean()
+            currentDice = []
+            
+            for _ in 0 ..< 5 - tmpSave.count{
+                currentDice.append(Dice.randomDice())
+            }
+            totalDice = currentDice + tmpSave
+            possibleScoreUpdate()
+            rollTime += 1
         }
-        possibleScoreUpdate()
     }
     
     
@@ -94,26 +97,68 @@ struct YachtModel {
         print(tmpSmallStraight) // 스몰 스트레이트만 좀 틀림.
         print(tmpFullHouse)
         print(tmpYatchu)
-
+    }
+    
+    mutating func selectScore(index: Int){
+        if index == 0 {
+            oneScore = tmponeScore
+        }else if index == 1{
+            twoScore = tmptwoScore
+        }else if index == 2{
+            threeScore = tmptwoScore
+        }else if index == 3{
+            fourScore = tmpfourScore
+        }else if index == 4{
+            fiveScore = tmpfiveScore
+        }else if index == 5{
+            sixScore = tmpsixScore
+        }else if index == 6{
+            choiceScore = tmpChoiceScore
+        }else if index == 7{
+            fourOfAKind = tmpfourScore
+        }else if index == 8{
+            smallStraight = tmpSmallStraight
+        }else if index == 9{
+            largeStrait = tmpLargeStrait
+        }else if index == 10{
+            fullHouse = tmpFullHouse
+        }else if index == 11{
+            yatchu = tmpYatchu
+        }
+        
+        // end turn.
+        rollTime = 0
+        tmpSave = []
+        totalDice = []
+        currentDice = []
     }
     
     mutating func keepDice(index : Int){
-        let dice = totalDice.remove(at: index)
+        let dice = currentDice.remove(at: index)
         tmpSave.append(dice)
-        
-        print("total dices : \(totalDice)")
-        print("saved dicesd : \(tmpSave)")
     }
     
     mutating func backToRoll(index : Int){
         let dice = tmpSave.remove(at: index)
-        totalDice.append(dice)
+        currentDice.append(dice)
     }
-    
-    
-    mutating func possibleScoreUpdate(){
-//        totalDice = currentDices + tmpSave
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+extension YachtModel{
+    mutating func possibleScoreUpdate(){
         for dice in totalDice{
             if dice == .one{
                 tmponeScore = tmponeScore + dice.rawValue
@@ -204,12 +249,15 @@ struct YachtModel {
         
         // yachu
         for index in totalDice.indices{
-            if totalDice[index].rawValue != totalDice[index + 1].rawValue{
-                tmpYatchu = 0
-                break
-            }else{
-                tmpYatchu += totalDice[index].rawValue
+            if index < totalDice.count - 1 {
+                if totalDice[index].rawValue != totalDice[index + 1].rawValue{
+                    tmpYatchu = 0
+                    break
+                }else{
+                    tmpYatchu += totalDice[index].rawValue
+                }
             }
+            
         }
         
         
@@ -219,7 +267,4 @@ struct YachtModel {
         
         
     }
-    
-    
-    
 }

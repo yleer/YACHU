@@ -14,8 +14,8 @@ class ViewController: UIViewController {
     let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
     
     @IBOutlet var scores: [UILabel]!
-    @IBOutlet var savedCards: [UILabel]!
-    @IBOutlet var dices: [UILabel]!
+    @IBOutlet var savedDices: [UILabel]!
+    @IBOutlet var currentDices: [UILabel]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,42 +28,42 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc func scoreTap(_ gesture : UITapGestureRecognizer){
-        if let chosenScore = gesture.view as? UILabel{
-            if let index = scores.firstIndex(of: chosenScore){
-                print(index)
-                model.selectScore(at: index)
-            }
-        }
-        updateViewFromModel()
+    
+    
+    func updateViewFromModel(){
+        currentDiceUpdate()
+        savedDiceUpdate()
+        updateScore()
     }
     
+    // currentDices들 (roll 할것들) update.
     private func currentDiceUpdate(){
-        for index in dices.indices{
-            dices[index].text = ""
+        for index in currentDices.indices{
+            currentDices[index].isUserInteractionEnabled = true
+            currentDices[index].text = ""
+            let tap = UITapGestureRecognizer(target: self, action: #selector(tapToKeep))
+            currentDices[index].addGestureRecognizer(tap)
         }
         for index in model.currentDice.indices{
-            dices[index].isUserInteractionEnabled = true
-            dices[index].text = String(model.currentDice[index].rawValue)
-            let tap = UITapGestureRecognizer(target: self, action: #selector(tapToKeep))
-            dices[index].addGestureRecognizer(tap)
+            currentDices[index].text = String(model.currentDice[index].rawValue)
         }
-
     }
-    
+    // savedDices (tmp dices) update.
     private func savedDiceUpdate(){
-        for index in savedCards.indices{
-            savedCards[index].text = ""
-            savedCards[index].isUserInteractionEnabled = true
+        for index in savedDices.indices{
+            savedDices[index].isUserInteractionEnabled = true
+            savedDices[index].text = ""
             let tap = UITapGestureRecognizer(target: self, action: #selector(tapToRemove))
-            savedCards[index].addGestureRecognizer(tap)
+            savedDices[index].addGestureRecognizer(tap)
         }
         for index in model.tmpSave.indices{
-            savedCards[index].text = String(model.tmpSave[index].rawValue)
+            savedDices[index].text = String(model.tmpSave[index].rawValue)
         }
     }
     
+    //
     private func updateScore(){
+        // 새로운 턴이면 확정된 점수는 점수 기입하고 아닌 것들은 "" 으로 점수 기입.
         if model.newTurn{
             for index in scores.indices{
                 if model.actualScore[index] != nil{
@@ -73,7 +73,9 @@ class ViewController: UIViewController {
                 }
                 
             }
-        }else{
+        }
+        // 새로운 턴 아니면 확정된 점수 기입하고 user interaction 없애기. 확정 아니면 tmpscore 점수 회색으로 표시.
+        else{
             for index in scores.indices{
                 if model.actualScore[index] != nil{
                     scores[index].isUserInteractionEnabled = false
@@ -86,21 +88,12 @@ class ViewController: UIViewController {
         }
         
     }
-    
-    
-    func updateViewFromModel(){
-        // 주사위 돌릴 주사위들
-        currentDiceUpdate()
-        // 저장한 주사위들
-        savedDiceUpdate()
-        // 번호 누르면 데이터 입력하기
-        updateScore()
-    }
+
     
     @objc func tapToRemove(_ gesture : UITapGestureRecognizer){
         if let chosenDice = gesture.view as? UILabel{
             if chosenDice.text != ""{
-                if let index = savedCards.firstIndex(of: chosenDice){
+                if let index = savedDices.firstIndex(of: chosenDice){
                     model.backToRoll(index: index)
                 }
             }
@@ -110,8 +103,17 @@ class ViewController: UIViewController {
     
     @objc func tapToKeep(_ gesture : UITapGestureRecognizer){
         if let chosenDice = gesture.view as? UILabel{
-            if let index = dices.firstIndex(of: chosenDice){
+            if let index = currentDices.firstIndex(of: chosenDice){
                 model.keepDice(index: index)
+            }
+        }
+        updateViewFromModel()
+    }
+    
+    @objc func scoreTap(_ gesture : UITapGestureRecognizer){
+        if let chosenScore = gesture.view as? UILabel{
+            if let index = scores.firstIndex(of: chosenScore){
+                model.selectScore(at: index)
             }
         }
         updateViewFromModel()
@@ -120,9 +122,7 @@ class ViewController: UIViewController {
     
     @IBAction func rollDice(_ sender: UIButton) {
         model.rollDice()
-//        model.printPossibleOutcomes()
         updateViewFromModel()
     }
 }
 
-// 내일은 좀 주사위 돌리기 가능하게 하기. 스몰스트레이트 해결하기.

@@ -8,8 +8,13 @@
 import Foundation
 
 struct YachtModel {
-    // totalDice
-    var totalDice : [Dice] = []
+    var totalDice : [Dice] {
+        get{
+            return tmpSave + currentDice
+        }
+        set{
+        }
+    }
     var tmpSave : [Dice] = []
     // currentDice 는 5 - tmpSave
     var currentDice : [Dice] = []{
@@ -44,23 +49,15 @@ struct YachtModel {
             for _ in 0 ..< 5 - tmpSave.count{
                 currentDice.append(Dice.randomDice())
             }
-            totalDice = currentDice + tmpSave
             possibleScoreUpdate()
             rollTime += 1
         }
     }
     
-    
     mutating func clean(){
         tmpScore = [0,0,0,0,0,0,0,0,0,0,0,0]
     }
-    
-    func printPossibleOutcomes(){
-        for score in tmpScore{
-            print(score)
-        }
-    }
-    
+        
     mutating func selectScore(at index: Int){
         actualScore[index] = tmpScore[index]
         

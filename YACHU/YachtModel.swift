@@ -19,38 +19,20 @@ struct YachtModel {
             }
         }
     }
-    
-    // scores.
-    var oneScore : Int?
-    var twoScore : Int?
-    var threeScore : Int?
-    var fourScore : Int?
-    var fiveScore : Int?
-    var sixScore : Int?
-    
-    var choiceScore : Int?
-    var fourOfAKind : Int?
-    var fullHouse : Int?
-    var smallStraight : Int?
-    var largeStrait : Int?
-    var yatchu : Int?
-    
-    var tmponeScore = 0
-    var tmptwoScore = 0
-    var tmpthreeScore = 0
-    var tmpfourScore = 0
-    var tmpfiveScore = 0
-    var tmpsixScore = 0
-    
-    var tmpChoiceScore = 0
-    var tmpFourOfAKind = 0
-    
-    var tmpFullHouse = 0
-    
-    var tmpSmallStraight = 0
-    var tmpLargeStrait = 0
-    
-    var tmpYatchu = 0
+
+    var actualScore : [Int?] = [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]
+    var tmpScore = [0,0,0,0,0,0,0,0,0,0,0,0]
+    var newTurn : Bool{
+        get{
+            for score in tmpScore{
+                if score != 0{
+                    return false
+                }
+            }
+            return true
+        }
+    }
+   
     
     var rollTime = 0
     
@@ -70,66 +52,23 @@ struct YachtModel {
     
     
     mutating func clean(){
-        tmponeScore = 0
-        tmptwoScore = 0
-        tmpthreeScore = 0
-        tmpfourScore = 0
-        tmpfiveScore = 0
-        tmpsixScore = 0
-        tmpChoiceScore = 0
-        tmpFourOfAKind = 0
-        tmpLargeStrait = 0
-        tmpSmallStraight = 0
-        tmpFullHouse = 0
-        tmpYatchu = 0
+        tmpScore = [0,0,0,0,0,0,0,0,0,0,0,0]
     }
     
     func printPossibleOutcomes(){
-        print(tmponeScore)
-        print(tmptwoScore)
-        print(tmpthreeScore)
-        print(tmpfourScore)
-        print(tmpfiveScore)
-        print(tmpsixScore)
-        print(tmpChoiceScore)
-        print(tmpFourOfAKind)
-        print(tmpLargeStrait)
-        print(tmpSmallStraight) // 스몰 스트레이트만 좀 틀림.
-        print(tmpFullHouse)
-        print(tmpYatchu)
+        for score in tmpScore{
+            print(score)
+        }
     }
     
-    mutating func selectScore(index: Int){
-        if index == 0 {
-            oneScore = tmponeScore
-        }else if index == 1{
-            twoScore = tmptwoScore
-        }else if index == 2{
-            threeScore = tmptwoScore
-        }else if index == 3{
-            fourScore = tmpfourScore
-        }else if index == 4{
-            fiveScore = tmpfiveScore
-        }else if index == 5{
-            sixScore = tmpsixScore
-        }else if index == 6{
-            choiceScore = tmpChoiceScore
-        }else if index == 7{
-            fourOfAKind = tmpfourScore
-        }else if index == 8{
-            smallStraight = tmpSmallStraight
-        }else if index == 9{
-            largeStrait = tmpLargeStrait
-        }else if index == 10{
-            fullHouse = tmpFullHouse
-        }else if index == 11{
-            yatchu = tmpYatchu
-        }
+    mutating func selectScore(at index: Int){
+        actualScore[index] = tmpScore[index]
         
         // end turn.
         rollTime = 0
         tmpSave = []
         totalDice = []
+        clean()
         currentDice = []
     }
     
@@ -161,23 +100,23 @@ extension YachtModel{
     mutating func possibleScoreUpdate(){
         for dice in totalDice{
             if dice == .one{
-                tmponeScore = tmponeScore + dice.rawValue
+                tmpScore[0] = tmpScore[0] + dice.rawValue
             }else if dice == .two{
-                tmptwoScore = tmptwoScore + dice.rawValue
+                tmpScore[1] = tmpScore[1] + dice.rawValue
             }else if dice == .three{
-                tmpthreeScore = tmpthreeScore + dice.rawValue
+                tmpScore[2] = tmpScore[2] + dice.rawValue
             }else if dice == .four{
-                tmpfourScore = tmpfourScore + dice.rawValue
+                tmpScore[3] = tmpScore[3] + dice.rawValue
             }else if dice == .five{
-                tmpfiveScore = tmpfiveScore + dice.rawValue
+                tmpScore[4] = tmpScore[4] + dice.rawValue
             }else if dice == .six{
-                tmpsixScore = tmpsixScore + dice.rawValue
+                tmpScore[5] = tmpScore[5] + dice.rawValue
             }
         }
         
         // tmpChoiceScore 계산.
         for dice in totalDice{
-            tmpChoiceScore += dice.rawValue
+            tmpScore[6] += dice.rawValue
         }
         
         // four of a kind 계산.  오류 남.
@@ -193,21 +132,10 @@ extension YachtModel{
         }
         
         if sameCount == 4{
-            tmpFourOfAKind = tmpChoiceScore
+            tmpScore[7] = tmpScore[6]
         }else{
-            tmpFourOfAKind = 0
+            tmpScore[7] = 0
         }
-        
-        // full house count.
-        if totalDice[0].rawValue == totalDice[1].rawValue && totalDice[1].rawValue ==  totalDice[2].rawValue && totalDice[3].rawValue == totalDice[4].rawValue{
-            tmpFullHouse = (totalDice[0].rawValue * 3) + (totalDice[4].rawValue * 2)
-        }else if totalDice[0].rawValue == totalDice[1].rawValue && totalDice[2].rawValue == totalDice[3].rawValue && totalDice[3].rawValue == totalDice[4].rawValue{
-            tmpFullHouse = (totalDice[0].rawValue * 2) + (totalDice[4].rawValue * 3)
-        }else{
-            tmpFullHouse = 0
-        }
-        
-        
         
 //        // small straight
         var tmpArray : [Int] = []
@@ -224,13 +152,12 @@ extension YachtModel{
                     wrongCount += 1
                 }
             }
-            
         }
         
         if wrongCount > 1{
-            tmpSmallStraight = 0
+            tmpScore[8] = 0
         }else{
-            tmpSmallStraight = tmpChoiceScore
+            tmpScore[8] = tmpScore[6]
         }
         
         
@@ -238,33 +165,56 @@ extension YachtModel{
         for index in totalDice.indices{
             if index != totalDice.count - 1{
                 if totalDice[index].rawValue + 1 != totalDice[index + 1].rawValue{
-                    tmpLargeStrait = 0
+                    tmpScore[9] = 0
                     break
                 }else{
-                    tmpLargeStrait += totalDice[index].rawValue
+                    tmpScore[9] += totalDice[index].rawValue
                 }
             }
             
         }
+        
+        // full house count.
+        if totalDice[0].rawValue == totalDice[1].rawValue && totalDice[1].rawValue ==  totalDice[2].rawValue && totalDice[3].rawValue == totalDice[4].rawValue{
+            tmpScore[10] = (totalDice[0].rawValue * 3) + (totalDice[4].rawValue * 2)
+        }else if totalDice[0].rawValue == totalDice[1].rawValue && totalDice[2].rawValue == totalDice[3].rawValue && totalDice[3].rawValue == totalDice[4].rawValue{
+            tmpScore[10] = (totalDice[0].rawValue * 2) + (totalDice[4].rawValue * 3)
+        }else{
+            tmpScore[10] = 0
+        }
+
         
         // yachu
         for index in totalDice.indices{
             if index < totalDice.count - 1 {
                 if totalDice[index].rawValue != totalDice[index + 1].rawValue{
-                    tmpYatchu = 0
+                    tmpScore[11] = 0
                     break
                 }else{
-                    tmpYatchu += totalDice[index].rawValue
+                    tmpScore[11] += totalDice[index].rawValue
                 }
             }
-            
         }
-        
-        
-        
-        
-        
-        
-        
     }
 }
+
+
+
+//index 기준
+//
+// 0       => 1
+// 1       => 2
+// 2       => 3
+// 3       => 4
+// 4       => 5
+// 5       => 6
+// 6       => choose
+// 7       => four of a kind
+// 8       => small straight
+// 9       => large straigt
+// 10      => full house
+// 11      => yachu
+//
+//
+//
+

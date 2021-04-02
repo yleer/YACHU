@@ -34,6 +34,7 @@ class ViewController: UIViewController {
         currentDiceUpdate()
         savedDiceUpdate()
         updateScore()
+        
     }
     
     // currentDices들 (roll 할것들) update.
@@ -75,6 +76,8 @@ class ViewController: UIViewController {
             }
         }
         // 새로운 턴 아니면 확정된 점수 기입하고 user interaction 없애기. 확정 아니면 tmpscore 점수 회색으로 표시.
+        
+        // MARK: User interaction 고쳐야 됨.
         else{
             for index in scores.indices{
                 if model.actualScore[index] != nil{

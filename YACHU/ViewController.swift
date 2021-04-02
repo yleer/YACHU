@@ -14,12 +14,15 @@ class ViewController: UIViewController {
     let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
     
     @IBOutlet var scores: [UILabel]!
-    @IBOutlet var savedDices: [UILabel]!
-    @IBOutlet var currentDices: [UILabel]!
+//    @IBOutlet var savedDices: [UILabel]!
+    @IBOutlet var savedDicesImageView: [UIImageView]!
+    @IBOutlet var currentDicesImages: [UIImageView]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViewFromModel()
+        
+        initDiceImages()
         
         for score in scores{
             score.isUserInteractionEnabled = true
@@ -28,6 +31,11 @@ class ViewController: UIViewController {
         }
     }
     
+    private func initDiceImages(){
+        for index in currentDicesImages.indices{
+            currentDicesImages[index].image = UIImage.init(named: "dice\(index + 1)")
+        }
+    }
     
     
     func updateViewFromModel(){
@@ -39,26 +47,28 @@ class ViewController: UIViewController {
     
     // currentDices들 (roll 할것들) update.
     private func currentDiceUpdate(){
-        for index in currentDices.indices{
-            currentDices[index].isUserInteractionEnabled = true
-            currentDices[index].text = ""
+        for index in currentDicesImages.indices{
+            currentDicesImages[index].isUserInteractionEnabled = true
+            currentDicesImages[index].image = UIImage()
             let tap = UITapGestureRecognizer(target: self, action: #selector(tapToKeep))
-            currentDices[index].addGestureRecognizer(tap)
+            currentDicesImages[index].addGestureRecognizer(tap)
         }
+        
         for index in model.currentDice.indices{
-            currentDices[index].text = String(model.currentDice[index].rawValue)
+            currentDicesImages[index].image = UIImage(named: "dice\(model.currentDice[index].rawValue)")
         }
     }
     // savedDices (tmp dices) update.
     private func savedDiceUpdate(){
-        for index in savedDices.indices{
-            savedDices[index].isUserInteractionEnabled = true
-            savedDices[index].text = ""
+        for index in savedDicesImageView.indices{
+            savedDicesImageView[index].isUserInteractionEnabled = true
+            savedDicesImageView[index].image = UIImage()
             let tap = UITapGestureRecognizer(target: self, action: #selector(tapToRemove))
-            savedDices[index].addGestureRecognizer(tap)
+            savedDicesImageView[index].addGestureRecognizer(tap)
         }
+        
         for index in model.tmpSave.indices{
-            savedDices[index].text = String(model.tmpSave[index].rawValue)
+            savedDicesImageView[index].image = UIImage(named: "dice\(model.tmpSave[index].rawValue)")
         }
     }
     
@@ -94,9 +104,9 @@ class ViewController: UIViewController {
 
     
     @objc func tapToRemove(_ gesture : UITapGestureRecognizer){
-        if let chosenDice = gesture.view as? UILabel{
-            if chosenDice.text != ""{
-                if let index = savedDices.firstIndex(of: chosenDice){
+        if let chosenDice = gesture.view as? UIImageView{
+            if chosenDice.image != UIImage(){
+                if let index = savedDicesImageView.firstIndex(of: chosenDice){
                     model.backToRoll(index: index)
                 }
             }
@@ -105,8 +115,8 @@ class ViewController: UIViewController {
     }
     
     @objc func tapToKeep(_ gesture : UITapGestureRecognizer){
-        if let chosenDice = gesture.view as? UILabel{
-            if let index = currentDices.firstIndex(of: chosenDice){
+        if let chosenDice = gesture.view as? UIImageView{
+            if let index = currentDicesImages.firstIndex(of: chosenDice){
                 model.keepDice(index: index)
             }
         }

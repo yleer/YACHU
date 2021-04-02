@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
     
     @IBOutlet var scores: [UILabel]!
-//    @IBOutlet var savedDices: [UILabel]!
+    //    @IBOutlet var savedDices: [UILabel]!
     @IBOutlet var savedDicesImageView: [UIImageView]!
     @IBOutlet var currentDicesImages: [UIImageView]!
     
@@ -82,7 +82,6 @@ class ViewController: UIViewController {
                 }else{
                     scores[index].text = ""
                 }
-                
             }
         }
         // 새로운 턴 아니면 확정된 점수 기입하고 user interaction 없애기. 확정 아니면 tmpscore 점수 회색으로 표시.
@@ -93,7 +92,7 @@ class ViewController: UIViewController {
                 if model.actualScore[index] != nil{
                     scores[index].isUserInteractionEnabled = false
                     scores[index].attributedText = NSAttributedString(string: String(model.actualScore[index]!), attributes: attributedTextForScore)
-                        
+                    
                 }else{
                     scores[index].attributedText = NSAttributedString(string: String(model.tmpScore[index]), attributes: attributedTextForTemp)
                 }
@@ -101,7 +100,7 @@ class ViewController: UIViewController {
         }
         
     }
-
+    
     
     @objc func tapToRemove(_ gesture : UITapGestureRecognizer){
         if let chosenDice = gesture.view as? UIImageView{
@@ -131,11 +130,55 @@ class ViewController: UIViewController {
         }
         updateViewFromModel()
     }
-
+    
     
     @IBAction func rollDice(_ sender: UIButton) {
-        model.rollDice()
-        updateViewFromModel()
+        if model.rollTime < 3{
+            model.rollDice()
+            animate()
+            updateViewFromModel()
+        }
     }
+    
+    private func animate(){
+        diceAnimation()
+        animateDice()
+    }
+    
+    private func diceAnimation(){
+        UIView.animate(
+            withDuration: 2,
+            delay: 0,
+            usingSpringWithDamping: 1,
+            initialSpringVelocity: 1,
+            options: [],
+            animations: {
+                for dice in self.currentDicesImages{
+                    dice.transform = CGAffineTransform(scaleX: 5, y: 5)
+                    dice.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+                    dice.transform = CGAffineTransform(translationX: 50, y: 0)
+                }
+            }){
+                finished in
+            
+                UIView.animate(withDuration: 0.4) {
+                    for dice in self.currentDicesImages{
+                        dice.transform = .identity
+                    }
+                }
+            
+        }
+    }
+    
+    private let diceAttackArray = [UIImage(named: "dice1"), UIImage(named: "dice2"), UIImage(named: "dice3"), UIImage(named: "dice4"), UIImage(named: "dice5"), UIImage(named: "dice6")]
+    
+    private func animateDice(){
+        for dice in currentDicesImages{
+            dice.animationImages = (diceAttackArray.shuffled() as! [UIImage])
+            dice.animationDuration = 1
+            dice.animationRepeatCount = 2
+            dice.startAnimating()
+        }
+    }
+    
 }
-

@@ -8,13 +8,38 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var model = YachtModel()
+    var model = YachtModel(){
+        didSet{
+            for index in 0..<5{
+                // model.currentDice랑 currentDiceImages랑 sync
+                if index <= model.currentDice.count - 1{
+                    print(index)
+                    currentDicesImages[index].isUserInteractionEnabled = true
+                    currentDicesImages[index].isHidden = false
+                }else{
+                    currentDicesImages[index].isUserInteractionEnabled = false
+                    currentDicesImages[index].isHidden = true
+                }
+                
+                
+                // model.savedDice랑 savedDicesImageView랑 sync
+                if index <= model.tmpSave.count - 1{
+                    savedDicesImageView[index].isHidden = false
+                    savedDicesImageView[index].isUserInteractionEnabled = true
+                }else{
+                    savedDicesImageView[index].isHidden = true
+                    savedDicesImageView[index].isUserInteractionEnabled = false
+                }
+            }
+        }
+    }
+    
+    
     
     let attributedTextForTemp = [NSAttributedString.Key.foregroundColor : UIColor.gray]
     let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
     
     @IBOutlet var scores: [UILabel]!
-    //    @IBOutlet var savedDices: [UILabel]!
     @IBOutlet var savedDicesImageView: [UIImageView]!
     @IBOutlet var currentDicesImages: [UIImageView]!
     
@@ -48,7 +73,6 @@ class ViewController: UIViewController {
     // currentDices들 (roll 할것들) update.
     private func currentDiceUpdate(){
         for index in currentDicesImages.indices{
-            currentDicesImages[index].isUserInteractionEnabled = true
             currentDicesImages[index].image = UIImage()
             let tap = UITapGestureRecognizer(target: self, action: #selector(tapToKeep))
             currentDicesImages[index].addGestureRecognizer(tap)
@@ -61,7 +85,6 @@ class ViewController: UIViewController {
     // savedDices (tmp dices) update.
     private func savedDiceUpdate(){
         for index in savedDicesImageView.indices{
-            savedDicesImageView[index].isUserInteractionEnabled = true
             savedDicesImageView[index].image = UIImage()
             let tap = UITapGestureRecognizer(target: self, action: #selector(tapToRemove))
             savedDicesImageView[index].addGestureRecognizer(tap)
@@ -106,21 +129,65 @@ class ViewController: UIViewController {
         if let chosenDice = gesture.view as? UIImageView{
             if chosenDice.image != UIImage(){
                 if let index = savedDicesImageView.firstIndex(of: chosenDice){
-                    model.backToRoll(index: index)
+                    let orignalFrame = savedDicesImageView[index].frame
+                    
+                    var tmpIndex = 0
+                    for empty in currentDicesImages.indices{
+                        if currentDicesImages[empty].isHidden{
+                            tmpIndex = empty
+                            break
+                        }
+                    }
+                    UIViewPropertyAnimator.runningPropertyAnimator(
+                        withDuration: 0.5,
+                        delay: 0,
+                        options: .curveLinear,
+                        animations: {
+                            self.savedDicesImageView[index].frame = self.currentDicesImages[tmpIndex].frame
+                        },
+                        completion: { finished in
+                            self.model.backToRoll(index: index)
+                            self.updateViewFromModel()
+                            self.savedDicesImageView[index].frame = orignalFrame
+                        }
+                    )
                 }
             }
         }
-        updateViewFromModel()
     }
+    
     
     @objc func tapToKeep(_ gesture : UITapGestureRecognizer){
         if let chosenDice = gesture.view as? UIImageView{
             if let index = currentDicesImages.firstIndex(of: chosenDice){
-                model.keepDice(index: index)
+                let orignalFrame = currentDicesImages[index].frame
+                var tmpIndex = 0
+                for empty in savedDicesImageView.indices{
+                    if savedDicesImageView[empty].isHidden{
+                        tmpIndex = empty
+                        break
+                    }
+                }
+                UIViewPropertyAnimator.runningPropertyAnimator(
+                    withDuration: 0.5,
+                    delay: 0,
+                    options: .curveLinear,
+                    animations: {
+                        self.currentDicesImages[index].frame = self.savedDicesImageView[tmpIndex].frame
+                    },
+                    completion: { finished in
+                        self.model.keepDice(index: index)
+                        self.updateViewFromModel()
+                        self.currentDicesImages[index].frame = orignalFrame
+                    }
+                )
             }
         }
-        updateViewFromModel()
     }
+    
+    
+    
+    
     
     @objc func scoreTap(_ gesture : UITapGestureRecognizer){
         if let chosenScore = gesture.view as? UILabel{
@@ -132,6 +199,12 @@ class ViewController: UIViewController {
     }
     
     
+    
+    
+    
+    
+    // Dice rolling part.
+    // https://github.com/revolalex/IOS-SWIFT-Animation-RIsk-Dice 참고함.
     @IBAction func rollDice(_ sender: UIButton) {
         if model.rollTime < 3{
             model.rollDice()
@@ -182,3 +255,6 @@ class ViewController: UIViewController {
     }
     
 }
+
+
+//model의 currnetDice와 vc의 currentDice sync하자.

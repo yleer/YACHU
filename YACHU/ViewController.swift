@@ -10,32 +10,43 @@ import UIKit
 class ViewController: UIViewController {
     var model = YachtModel(){
         didSet{
+            // sync with model.
             for index in 0..<5{
-                // model.currentDice랑 currentDiceImages랑 sync
-                if index <= model.currentDice.count - 1{
-                    print(index)
-                    currentDicesImages[index].isUserInteractionEnabled = true
-                    currentDicesImages[index].isHidden = false
-                }else{
-                    currentDicesImages[index].isUserInteractionEnabled = false
-                    currentDicesImages[index].isHidden = true
-                }
-                
-                
-                // model.savedDice랑 savedDicesImageView랑 sync
-                if index <= model.tmpSave.count - 1{
-                    savedDicesImageView[index].isHidden = false
-                    savedDicesImageView[index].isUserInteractionEnabled = true
-                }else{
-                    savedDicesImageView[index].isHidden = true
-                    savedDicesImageView[index].isUserInteractionEnabled = false
-                }
+                currentDiceUIUpdate(at: index)
+                savedDiceUIUpdate(at: index)
             }
         }
     }
     
+    // model.currentDice랑 currentDiceImages랑 sync
+    private func currentDiceUIUpdate(at index : Int){
+        if index <= model.currentDice.count - 1{
+            currentDicesImages[index].isUserInteractionEnabled = true
+            currentDicesImages[index].isHidden = false
+            let tap = UITapGestureRecognizer(target: self, action: #selector(tapToKeep))
+            currentDicesImages[index].addGestureRecognizer(tap)
+            currentDicesImages[index].image = UIImage(named: "dice\(model.currentDice[index].rawValue)")
+        }else{
+            currentDicesImages[index].isUserInteractionEnabled = false
+            currentDicesImages[index].isHidden = true
+        }
+    }
     
+    // model.savedDice랑 savedDicesImageView랑 sync
+    private func savedDiceUIUpdate(at index : Int){
+        if index <= model.tmpSave.count - 1{
+            savedDicesImageView[index].isHidden = false
+            savedDicesImageView[index].isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(tapToRemove))
+            savedDicesImageView[index].addGestureRecognizer(tap)
+            savedDicesImageView[index].image = UIImage(named: "dice\(model.tmpSave[index].rawValue)")
+        }else{
+            savedDicesImageView[index].isHidden = true
+            savedDicesImageView[index].isUserInteractionEnabled = false
+        }
+    }
     
+    // score label attributes.
     let attributedTextForTemp = [NSAttributedString.Key.foregroundColor : UIColor.gray]
     let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
     
@@ -45,79 +56,43 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViewFromModel()
-        
-        initDiceImages()
-        
+        updateScore()
+        initUIs()
+    }
+    
+    private func initUIs(){
+        // init dice images.
+        for index in currentDicesImages.indices{
+            currentDicesImages[index].image = UIImage.init(named: "dice\(index + 1)")
+        }
+        // init score UIs
         for score in scores{
-            score.isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(scoreTap))
             score.addGestureRecognizer(tap)
         }
     }
     
-    private func initDiceImages(){
-        for index in currentDicesImages.indices{
-            currentDicesImages[index].image = UIImage.init(named: "dice\(index + 1)")
-        }
-    }
     
-    
-    func updateViewFromModel(){
-        currentDiceUpdate()
-        savedDiceUpdate()
-        updateScore()
-        
-    }
-    
-    // currentDices들 (roll 할것들) update.
-    private func currentDiceUpdate(){
-        for index in currentDicesImages.indices{
-            currentDicesImages[index].image = UIImage()
-            let tap = UITapGestureRecognizer(target: self, action: #selector(tapToKeep))
-            currentDicesImages[index].addGestureRecognizer(tap)
-        }
-        
-        for index in model.currentDice.indices{
-            currentDicesImages[index].image = UIImage(named: "dice\(model.currentDice[index].rawValue)")
-        }
-    }
-    // savedDices (tmp dices) update.
-    private func savedDiceUpdate(){
-        for index in savedDicesImageView.indices{
-            savedDicesImageView[index].image = UIImage()
-            let tap = UITapGestureRecognizer(target: self, action: #selector(tapToRemove))
-            savedDicesImageView[index].addGestureRecognizer(tap)
-        }
-        
-        for index in model.tmpSave.indices{
-            savedDicesImageView[index].image = UIImage(named: "dice\(model.tmpSave[index].rawValue)")
-        }
-    }
-    
-    //
     private func updateScore(){
         // 새로운 턴이면 확정된 점수는 점수 기입하고 아닌 것들은 "" 으로 점수 기입.
         if model.newTurn{
             for index in scores.indices{
-                if model.actualScore[index] != nil{
-                    scores[index].attributedText = NSAttributedString(string: String(model.actualScore[index]!), attributes: attributedTextForScore)
+                scores[index].isUserInteractionEnabled = false
+                if let score = model.actualScore[index]{
+                    scores[index].attributedText = NSAttributedString(string: "\(score)", attributes: attributedTextForScore)
                 }else{
                     scores[index].text = ""
                 }
             }
         }
         // 새로운 턴 아니면 확정된 점수 기입하고 user interaction 없애기. 확정 아니면 tmpscore 점수 회색으로 표시.
-        
-        // MARK: User interaction 고쳐야 됨.
         else{
             for index in scores.indices{
-                if model.actualScore[index] != nil{
-                    scores[index].isUserInteractionEnabled = false
-                    scores[index].attributedText = NSAttributedString(string: String(model.actualScore[index]!), attributes: attributedTextForScore)
-                    
+                if let score = model.actualScore[index]{
+                    scores[index].attributedText = NSAttributedString(string: "\(score)", attributes: attributedTextForScore)
                 }else{
-                    scores[index].attributedText = NSAttributedString(string: String(model.tmpScore[index]), attributes: attributedTextForTemp)
+                    scores[index].isUserInteractionEnabled = true
+                    scores[index].attributedText = NSAttributedString(string: "\(model.tmpScore[index])", attributes: attributedTextForTemp)
                 }
             }
         }
@@ -130,7 +105,6 @@ class ViewController: UIViewController {
             if chosenDice.image != UIImage(){
                 if let index = savedDicesImageView.firstIndex(of: chosenDice){
                     let orignalFrame = savedDicesImageView[index].frame
-                    
                     var tmpIndex = 0
                     for empty in currentDicesImages.indices{
                         if currentDicesImages[empty].isHidden{
@@ -147,7 +121,6 @@ class ViewController: UIViewController {
                         },
                         completion: { finished in
                             self.model.backToRoll(index: index)
-                            self.updateViewFromModel()
                             self.savedDicesImageView[index].frame = orignalFrame
                         }
                     )
@@ -155,7 +128,6 @@ class ViewController: UIViewController {
             }
         }
     }
-    
     
     @objc func tapToKeep(_ gesture : UITapGestureRecognizer){
         if let chosenDice = gesture.view as? UIImageView{
@@ -177,7 +149,6 @@ class ViewController: UIViewController {
                     },
                     completion: { finished in
                         self.model.keepDice(index: index)
-                        self.updateViewFromModel()
                         self.currentDicesImages[index].frame = orignalFrame
                     }
                 )
@@ -188,14 +159,13 @@ class ViewController: UIViewController {
     
     
     
-    
     @objc func scoreTap(_ gesture : UITapGestureRecognizer){
         if let chosenScore = gesture.view as? UILabel{
             if let index = scores.firstIndex(of: chosenScore){
                 model.selectScore(at: index)
             }
         }
-        updateViewFromModel()
+        updateScore()
     }
     
     
@@ -209,7 +179,7 @@ class ViewController: UIViewController {
         if model.rollTime < 3{
             model.rollDice()
             animate()
-            updateViewFromModel()
+            
         }
     }
     
@@ -239,6 +209,7 @@ class ViewController: UIViewController {
                         dice.transform = .identity
                     }
                 }
+            self.updateScore()
             
         }
     }
@@ -253,8 +224,5 @@ class ViewController: UIViewController {
             dice.startAnimating()
         }
     }
-    
 }
 
-
-//model의 currnetDice와 vc의 currentDice sync하자.

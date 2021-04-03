@@ -92,7 +92,7 @@ struct YachtModel {
 
 
 
-
+// 이거 고치자.
 extension YachtModel{
     mutating func possibleScoreUpdate(){
         for dice in totalDice{
@@ -116,25 +116,35 @@ extension YachtModel{
             tmpScore[6] += dice.rawValue
         }
         
-        // four of a kind 계산.  오류 남.
-        var sameCount = 0
-        var prevValue = totalDice[0].rawValue
+        // four of a kind 계산.
+        var fourOfAKindCountArray = [0,0,0,0,0,0]
         for dice in totalDice{
-            if prevValue != dice.rawValue{
-                sameCount = 0
-            }else{
-                sameCount += 1
+            if dice.rawValue == 1{
+                fourOfAKindCountArray[0] += 1
+            }else if dice.rawValue == 2{
+                fourOfAKindCountArray[1] += 1
+            }else if dice.rawValue == 3{
+                fourOfAKindCountArray[2] += 1
+            }else if dice.rawValue == 4{
+                fourOfAKindCountArray[3] += 1
+            }else if dice.rawValue == 5{
+                fourOfAKindCountArray[4] += 1
+            }else if dice.rawValue == 6{
+                fourOfAKindCountArray[5] += 1
             }
-            prevValue = dice.rawValue
         }
         
-        if sameCount == 4{
-            tmpScore[7] = tmpScore[6]
+        if let indexOfFourSameDices = fourOfAKindCountArray.firstIndex(of: 4){
+            tmpScore[7] = (indexOfFourSameDices + 1) * 4
+            if let indexOfOneDice = fourOfAKindCountArray.firstIndex(of: 1){
+                tmpScore[7] += indexOfOneDice + 1
+            }
         }else{
             tmpScore[7] = 0
         }
+
         
-//        // small straight
+//        // small straight 오류 남.
         var tmpArray : [Int] = []
 
         for card in totalDice{

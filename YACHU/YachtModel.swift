@@ -144,27 +144,35 @@ extension YachtModel{
         }
 
         
-//        // small straight 오류 남.
-        var tmpArray : [Int] = []
-
-        for card in totalDice{
-            if !tmpArray.contains(card.rawValue){
-                tmpArray.append(card.rawValue)
-            }
-        }
-        var wrongCount = 0
-        for tmp in tmpArray.indices{
-            if tmp != tmpArray.count - 1{
-                if tmpArray[tmp] + 1 != tmpArray[tmp + 1]{
-                    wrongCount += 1
-                }
+//        // small straight
+        var smallStraightArray = [0,0,0,0,0,0]
+        
+        for dice in totalDice{
+            if dice.rawValue == 1{
+                smallStraightArray[0] += 1
+            }else if dice.rawValue == 2{
+                smallStraightArray[1] += 1
+            }else if dice.rawValue == 3{
+                smallStraightArray[2] += 1
+            }else if dice.rawValue == 4{
+                smallStraightArray[3] += 1
+            }else if dice.rawValue == 5{
+                smallStraightArray[4] += 1
+            }else if dice.rawValue == 6{
+                smallStraightArray[5] += 1
             }
         }
         
-        if wrongCount > 1{
-            tmpScore[8] = 0
-        }else{
+        // 연속 4개 -> 1234, 2345, 3456
+        
+        if smallStraightArray[0] > 0 && smallStraightArray[1] > 0 && smallStraightArray[2] > 0 && smallStraightArray[3] > 0{
             tmpScore[8] = tmpScore[6]
+        }else if smallStraightArray[4] > 0 && smallStraightArray[1] > 0 && smallStraightArray[2] > 0 && smallStraightArray[3] > 0{
+            tmpScore[8] = tmpScore[6]
+        }else if smallStraightArray[5] > 0 && smallStraightArray[4] > 0 && smallStraightArray[2] > 0 && smallStraightArray[3] > 0{
+            tmpScore[8] = tmpScore[6]
+        }else{
+            tmpScore[8] = 0
         }
         
         
@@ -181,7 +189,7 @@ extension YachtModel{
             
         }
         
-        // full house count.
+        // full house count. (total dice가 정렬된거라 가능함. 정렬 안된 배열이면 불가능.)
         if totalDice[0].rawValue == totalDice[1].rawValue && totalDice[1].rawValue ==  totalDice[2].rawValue && totalDice[3].rawValue == totalDice[4].rawValue{
             tmpScore[10] = (totalDice[0].rawValue * 3) + (totalDice[4].rawValue * 2)
         }else if totalDice[0].rawValue == totalDice[1].rawValue && totalDice[2].rawValue == totalDice[3].rawValue && totalDice[3].rawValue == totalDice[4].rawValue{
@@ -209,19 +217,16 @@ extension YachtModel{
 
 //index 기준
 //
-// 0       => 1
-// 1       => 2
-// 2       => 3
-// 3       => 4
-// 4       => 5
-// 5       => 6
-// 6       => choose
-// 7       => four of a kind
-// 8       => small straight
+// 0       => 1 done
+// 1       => 2 done
+// 2       => 3 done
+// 3       => 4 done
+// 4       => 5 done
+// 5       => 6 done
+// 6       => choose done
+// 7       => four of a kind done
+// 8       => small straight done
 // 9       => large straigt
-// 10      => full house
-// 11      => yachu
+// 10      => full house. 고칠거 좀 있음 full house count. (total dice가 정렬된거라 가능함. 정렬 안된 배열이면 불가능.)
+// 11      => yachu done
 //
-//
-//
-

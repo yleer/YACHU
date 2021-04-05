@@ -8,25 +8,21 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var model = YachtModel(){
-        didSet{
-            // sync with model.
-            for index in 0..<5{
-                currentDiceUIUpdate(at: index)
-                savedDiceUIUpdate(at: index)
-            }
-        }
-    }
+    
+    var firstPlayer = YachtModel()
+    var secondPlayer = YachtModel()
+    
+    var currentPlayer = YachtModel()
     
     
     // model.currentDice랑 currentDiceImages랑 sync
     private func currentDiceUIUpdate(at index : Int){
-        if index <= model.currentDice.count - 1{
+        if index <= currentPlayer.currentDice.count - 1{
             currentDicesImages[index].isUserInteractionEnabled = true
             currentDicesImages[index].isHidden = false
             let tap = UITapGestureRecognizer(target: self, action: #selector(tapToKeep))
             currentDicesImages[index].addGestureRecognizer(tap)
-            currentDicesImages[index].image = UIImage(named: "dice\(model.currentDice[index].rawValue)")
+            currentDicesImages[index].image = UIImage(named: "dice\(currentPlayer.currentDice[index].rawValue)")
         }else{
             currentDicesImages[index].isUserInteractionEnabled = false
             currentDicesImages[index].isHidden = true
@@ -35,12 +31,12 @@ class ViewController: UIViewController {
     
     // model.savedDice랑 savedDicesImageView랑 sync
     private func savedDiceUIUpdate(at index : Int){
-        if index <= model.tmpSave.count - 1{
+        if index <= currentPlayer.tmpSave.count - 1{
             savedDicesImageView[index].isHidden = false
             savedDicesImageView[index].isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(tapToRemove))
             savedDicesImageView[index].addGestureRecognizer(tap)
-            savedDicesImageView[index].image = UIImage(named: "dice\(model.tmpSave[index].rawValue)")
+            savedDicesImageView[index].image = UIImage(named: "dice\(currentPlayer.tmpSave[index].rawValue)")
         }else{
             savedDicesImageView[index].isHidden = true
             savedDicesImageView[index].isUserInteractionEnabled = false
@@ -61,8 +57,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        currentPlayer = firstPlayer
         updateScore()
         initUIs()
+        
     }
     
     private func initUIs(){
@@ -80,10 +78,10 @@ class ViewController: UIViewController {
     
     private func updateScore(){
         // 새로운 턴이면 확정된 점수는 점수 기입하고 아닌 것들은 "" 으로 점수 기입.
-        if model.newTurn{
+        if currentPlayer.newTurn{
             for index in scores.indices{
                 scores[index].isUserInteractionEnabled = false
-                if let score = model.actualScore[index]{
+                if let score = currentPlayer.actualScore[index]{
                     scores[index].attributedText = NSAttributedString(string: "\(score)", attributes: attributedTextForScore)
                 }else{
                     scores[index].text = ""
@@ -93,11 +91,11 @@ class ViewController: UIViewController {
         // 새로운 턴 아니면 확정된 점수 기입하고 user interaction 없애기. 확정 아니면 tmpscore 점수 회색으로 표시.
         else{
             for index in scores.indices{
-                if let score = model.actualScore[index]{
+                if let score = currentPlayer.actualScore[index]{
                     scores[index].attributedText = NSAttributedString(string: "\(score)", attributes: attributedTextForScore)
                 }else{
                     scores[index].isUserInteractionEnabled = true
-                    scores[index].attributedText = NSAttributedString(string: "\(model.tmpScore[index])", attributes: attributedTextForTemp)
+                    scores[index].attributedText = NSAttributedString(string: "\(currentPlayer.tmpScore[index])", attributes: attributedTextForTemp)
                 }
             }
         }
@@ -125,7 +123,7 @@ class ViewController: UIViewController {
                             self.savedDicesImageView[index].frame = self.currentDicesImages[tmpIndex].frame
                         },
                         completion: { finished in
-                            self.model.backToRoll(index: index)
+                            self.currentPlayer.backToRoll(index: index)
                             self.savedDicesImageView[index].frame = orignalFrame
                         }
                     )
@@ -153,26 +151,41 @@ class ViewController: UIViewController {
                         self.currentDicesImages[index].frame = self.savedDicesImageView[tmpIndex].frame
                     },
                     completion: { finished in
-                        self.model.keepDice(index: index)
+                        self.currentPlayer.keepDice(index: index)
                         self.currentDicesImages[index].frame = orignalFrame
+                        self.updateUI()
                     }
                 )
             }
         }
     }
+
     
-    
+    private func updateUI(){
+        for index in 0..<5{
+            currentDiceUIUpdate(at: index)
+            savedDiceUIUpdate(at: index)
+        }
+    }
     
     
     @objc func scoreTap(_ gesture : UITapGestureRecognizer){
         if let chosenScore = gesture.view as? UILabel{
             if let index = scores.firstIndex(of: chosenScore){
-                model.selectScore(at: index)
+                currentPlayer.selectScore(at: index)
             }
         }
-        subTotal.text = "\(model.subTotal)"
-        total.text = "\(model.totalScore)"
-        currentTurnCount.text = "Turn : \(model.currentTurn) / 12"
+        subTotal.text = "\(currentPlayer.subTotal)"
+        total.text = "\(currentPlayer.totalScore)"
+        currentTurnCount.text = "Turn : \(currentPlayer.currentTurn) / 12"
+        updateScore() // 현재 턴에 대한 점수 변경
+        // 턴 변경
+        if currentPlayer === firstPlayer{
+            currentPlayer = secondPlayer
+        }else{
+            currentPlayer = firstPlayer
+        }
+        // 다음 턴에 대한 점수 보이기.
         updateScore()
     }
     
@@ -184,10 +197,15 @@ class ViewController: UIViewController {
     // Dice rolling part.
     // https://github.com/revolalex/IOS-SWIFT-Animation-RIsk-Dice 참고함.
     @IBAction func rollDice(_ sender: UIButton) {
-        if model.rollTime < 3{
-            model.rollDice()
+        if currentPlayer.rollTime < 3{
+            currentPlayer.rollDice()
             animate()
-            
+        }
+        
+        for index in 0..<5{
+            // MARK: need to change
+            currentDiceUIUpdate(at: index)
+            savedDiceUIUpdate(at: index)
         }
     }
     

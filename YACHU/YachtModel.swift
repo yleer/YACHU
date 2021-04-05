@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct YachtModel {
+class YachtModel {
     var totalDice : [Dice] {
         get{
             return tmpSave + currentDice
@@ -30,7 +30,7 @@ struct YachtModel {
     var actualScore : [Int?] = [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]
     var tmpScore = [0,0,0,0,0,0,0,0,0,0,0,0]
     var newTurn : Bool{
-        mutating get{
+         get{
             for score in tmpScore{
                 if score != 0{
                     return false
@@ -69,24 +69,26 @@ struct YachtModel {
     
     var rollTime = 0
     
-    mutating func rollDice(){
+     func rollDice(){
         if rollTime < 3{
             clean()
             currentDice = []
             
             for _ in 0 ..< 5 - tmpSave.count{
+                
                 currentDice.append(Dice.randomDice())
             }
+//            print(totalDice)
             possibleScoreUpdate()
             rollTime += 1
         }
     }
     
-    mutating func clean(){
+     func clean(){
         tmpScore = [0,0,0,0,0,0,0,0,0,0,0,0]
     }
         
-    mutating func selectScore(at index: Int){
+     func selectScore(at index: Int){
         actualScore[index] = tmpScore[index]
         
         // end turn.
@@ -97,12 +99,12 @@ struct YachtModel {
         currentDice = []
     }
     
-    mutating func keepDice(index : Int){
+     func keepDice(index : Int){
         let dice = currentDice.remove(at: index)
         tmpSave.append(dice)
     }
     
-    mutating func backToRoll(index : Int){
+     func backToRoll(index : Int){
         let dice = tmpSave.remove(at: index)
         currentDice.append(dice)
     }
@@ -122,7 +124,7 @@ struct YachtModel {
 
 // 이거 고치자.
 extension YachtModel{
-    mutating func possibleScoreUpdate(){
+     func possibleScoreUpdate(){
         for dice in totalDice{
             if dice == .one{
                 tmpScore[0] = tmpScore[0] + dice.rawValue

@@ -180,8 +180,53 @@ class ViewController: UIViewController {
         // 턴 변경
         if currentPlayer === firstPlayer{
             currentPlayer = secondPlayer
+            //
+            let firstPlayerTurnSlider = UIView(frame: CGRect(x: 0, y: 400, width: 100, height: 100))
+            firstPlayerTurnSlider.backgroundColor = .brown
+            let firstPlayerTurnLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            firstPlayerTurnLabel.text = "Second Player's turn."
+            firstPlayerTurnSlider.addSubview(firstPlayerTurnLabel)
+            view.addSubview(firstPlayerTurnSlider)
+            
+            
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: 1,
+                delay: 0,
+                options: [],
+                animations: {
+                    firstPlayerTurnSlider.frame = CGRect(x: 500, y: 400, width: 100, height: 100)
+                },
+                completion: { finished in
+                    firstPlayerTurnSlider.removeFromSuperview()
+                }
+            )
+            
         }else{
             currentPlayer = firstPlayer
+            //
+            
+            let firstPlayerTurnSlider = UIView(frame: CGRect(x: 0, y: 400, width: 100, height: 100))
+            firstPlayerTurnSlider.backgroundColor = .brown
+            let firstPlayerTurnLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            firstPlayerTurnLabel.text = "First Player's turn."
+            firstPlayerTurnSlider.addSubview(firstPlayerTurnLabel)
+            view.addSubview(firstPlayerTurnSlider)
+            
+            
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: 1,
+                delay: 0,
+                options: [],
+                animations: {
+                    firstPlayerTurnSlider.frame = CGRect(x: 500, y: 400, width: 100, height: 100)
+                },
+                completion: { finished in
+                    firstPlayerTurnSlider.removeFromSuperview()
+                }
+            )
+            
+            
+            
         }
         numberOfTurnLeft.text = "3 Left"
         // 다음 턴에 대한 점수 보이기.
@@ -189,6 +234,8 @@ class ViewController: UIViewController {
     }
     
     
+    // animate 3 left
+    // animate or show next player every time turn changes.
     
     
     

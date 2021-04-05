@@ -967,7 +967,16 @@
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn: 1 / 12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTv-WE-GSb">
-                                <rect key="frame" x="0.0" y="54" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="54" width="191" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 Left" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Td6-kX-Oaz">
+                                <rect key="frame" x="320" y="69" width="94" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="94" id="fda-Ue-r3e"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -977,23 +986,27 @@
                         <color key="backgroundColor" systemColor="systemTealColor"/>
                         <constraints>
                             <constraint firstItem="pTv-WE-GSb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="GUy-jF-QGm"/>
+                            <constraint firstItem="Td6-kX-Oaz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="25" id="IOk-Dm-qOQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="IVw-HX-JsJ" secondAttribute="bottom" id="JX7-io-2Ts"/>
                             <constraint firstItem="9kI-nl-Iux" firstAttribute="top" secondItem="pTv-WE-GSb" secondAttribute="bottom" constant="10" id="KyE-r3-vO7"/>
                             <constraint firstItem="IVw-HX-JsJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="211" id="POv-Yh-epk"/>
                             <constraint firstItem="IVw-HX-JsJ" firstAttribute="top" secondItem="BiX-DF-IOc" secondAttribute="bottom" constant="11" id="SmS-zV-dva"/>
                             <constraint firstItem="BiX-DF-IOc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="TZA-Uc-IHs"/>
                             <constraint firstItem="9kI-nl-Iux" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="UY3-vG-KaH"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pTv-WE-GSb" secondAttribute="trailing" id="bpS-uY-6pL"/>
                             <constraint firstItem="pTv-WE-GSb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eT2-AQ-r7O"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Td6-kX-Oaz" secondAttribute="trailing" id="f1e-Sw-HT9"/>
                             <constraint firstItem="BiX-DF-IOc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iSY-Ce-Jnn"/>
+                            <constraint firstItem="9kI-nl-Iux" firstAttribute="top" secondItem="Td6-kX-Oaz" secondAttribute="bottom" constant="24" id="kKk-Ew-rcc"/>
                             <constraint firstItem="BiX-DF-IOc" firstAttribute="top" secondItem="9kI-nl-Iux" secondAttribute="bottom" id="kYA-R3-lC1"/>
                             <constraint firstItem="9kI-nl-Iux" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="70" id="l2o-JN-H2u"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IVw-HX-JsJ" secondAttribute="trailing" constant="173" id="lWJ-Xc-LFG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9kI-nl-Iux" secondAttribute="trailing" constant="30" id="qt3-Y9-hxf"/>
+                            <constraint firstItem="Td6-kX-Oaz" firstAttribute="leading" secondItem="pTv-WE-GSb" secondAttribute="trailing" constant="129" id="rPm-Ci-5PQ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="currentTurnCount" destination="pTv-WE-GSb" id="ogz-00-Wkz"/>
+                        <outlet property="numberOfTurnLeft" destination="Td6-kX-Oaz" id="3zP-eI-2oI"/>
                         <outlet property="subTotal" destination="H0t-8f-SnZ" id="hpj-XE-pbj"/>
                         <outlet property="total" destination="hUf-pu-hle" id="WhG-b6-6vJ"/>
                         <outletCollection property="currentDicesImages" destination="meb-CC-jJK" collectionClass="NSMutableArray" id="SOd-DD-rrq"/>

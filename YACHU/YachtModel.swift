@@ -90,7 +90,7 @@ class YachtModel {
         
      func selectScore(at index: Int){
         actualScore[index] = tmpScore[index]
-        
+
         // end turn.
         rollTime = 0
         tmpSave = []
@@ -271,6 +271,6 @@ extension YachtModel{
 // 7       => four of a kind done
 // 8       => small straight done
 // 9       => large straigt  done.
-// 10      => full house. 고칠거 좀 있음 full house count. (total dice가 정렬된거라 가능함. 정렬 안된 배열이면 불가능.)
+// 10      => full house.  고쳐야됨
 // 11      => yachu done
 //

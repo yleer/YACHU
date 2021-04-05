@@ -9,11 +9,31 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // score label attributes.
+    let attributedTextForTemp = [NSAttributedString.Key.foregroundColor : UIColor.gray]
+    let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
+    
+    @IBOutlet weak var numberOfTurnLeft: UILabel!
+    @IBOutlet weak var total: UILabel!
+    @IBOutlet weak var subTotal: UILabel!
+    @IBOutlet var scores: [UILabel]!
+    @IBOutlet var savedDicesImageView: [UIImageView]!
+    @IBOutlet var currentDicesImages: [UIImageView]!
+    @IBOutlet weak var currentTurnCount: UILabel!
+
+    
     var firstPlayer = YachtModel()
     var secondPlayer = YachtModel()
-    
+    // model showing on screen.
     var currentPlayer = YachtModel()
     
+    // dice ui update
+    private func updateUI(){
+        for index in 0..<5{
+            currentDiceUIUpdate(at: index)
+            savedDiceUIUpdate(at: index)
+        }
+    }
     
     // model.currentDice랑 currentDiceImages랑 sync
     private func currentDiceUIUpdate(at index : Int){
@@ -44,35 +64,12 @@ class ViewController: UIViewController {
     }
     
     
-    // score label attributes.
-    let attributedTextForTemp = [NSAttributedString.Key.foregroundColor : UIColor.gray]
-    let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
-    
-    @IBOutlet weak var total: UILabel!
-    @IBOutlet weak var subTotal: UILabel!
-    @IBOutlet var scores: [UILabel]!
-    @IBOutlet var savedDicesImageView: [UIImageView]!
-    @IBOutlet var currentDicesImages: [UIImageView]!
-    @IBOutlet weak var currentTurnCount: UILabel!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         currentPlayer = firstPlayer
         updateScore()
-        initUIs()
         
-    }
-    
-    private func initUIs(){
-        // init dice images.
-        for index in currentDicesImages.indices{
-            currentDicesImages[index].image = UIImage.init(named: "dice\(index + 1)")
-        }
-        // init score UIs
-        for score in scores{
-            let tap = UITapGestureRecognizer(target: self, action: #selector(scoreTap))
-            score.addGestureRecognizer(tap)
-        }
+        numberOfTurnLeft.text = "3 Left"
     }
     
     
@@ -94,12 +91,13 @@ class ViewController: UIViewController {
                 if let score = currentPlayer.actualScore[index]{
                     scores[index].attributedText = NSAttributedString(string: "\(score)", attributes: attributedTextForScore)
                 }else{
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(scoreTap))
+                    scores[index].addGestureRecognizer(tap)
                     scores[index].isUserInteractionEnabled = true
                     scores[index].attributedText = NSAttributedString(string: "\(currentPlayer.tmpScore[index])", attributes: attributedTextForTemp)
                 }
             }
         }
-        
     }
     
     
@@ -125,6 +123,7 @@ class ViewController: UIViewController {
                         completion: { finished in
                             self.currentPlayer.backToRoll(index: index)
                             self.savedDicesImageView[index].frame = orignalFrame
+                            self.updateUI()
                         }
                     )
                 }
@@ -161,33 +160,34 @@ class ViewController: UIViewController {
     }
 
     
-    private func updateUI(){
-        for index in 0..<5{
-            currentDiceUIUpdate(at: index)
-            savedDiceUIUpdate(at: index)
-        }
-    }
     
     
+    // MARK: need to make animation when turn changes.
     @objc func scoreTap(_ gesture : UITapGestureRecognizer){
         if let chosenScore = gesture.view as? UILabel{
             if let index = scores.firstIndex(of: chosenScore){
                 currentPlayer.selectScore(at: index)
             }
         }
+        
         subTotal.text = "\(currentPlayer.subTotal)"
         total.text = "\(currentPlayer.totalScore)"
         currentTurnCount.text = "Turn : \(currentPlayer.currentTurn) / 12"
+        
         updateScore() // 현재 턴에 대한 점수 변경
+        updateUI()
+        
         // 턴 변경
         if currentPlayer === firstPlayer{
             currentPlayer = secondPlayer
         }else{
             currentPlayer = firstPlayer
         }
+        numberOfTurnLeft.text = "3 Left"
         // 다음 턴에 대한 점수 보이기.
         updateScore()
     }
+    
     
     
     
@@ -198,15 +198,11 @@ class ViewController: UIViewController {
     // https://github.com/revolalex/IOS-SWIFT-Animation-RIsk-Dice 참고함.
     @IBAction func rollDice(_ sender: UIButton) {
         if currentPlayer.rollTime < 3{
+            numberOfTurnLeft.text = "\(2 - currentPlayer.rollTime) Left"
             currentPlayer.rollDice()
             animate()
         }
-        
-        for index in 0..<5{
-            // MARK: need to change
-            currentDiceUIUpdate(at: index)
-            savedDiceUIUpdate(at: index)
-        }
+        updateUI()
     }
     
     private func animate(){

@@ -18,6 +18,7 @@ class ViewController: UIViewController {
         }
     }
     
+    
     // model.currentDice랑 currentDiceImages랑 sync
     private func currentDiceUIUpdate(at index : Int){
         if index <= model.currentDice.count - 1{
@@ -46,13 +47,17 @@ class ViewController: UIViewController {
         }
     }
     
+    
     // score label attributes.
     let attributedTextForTemp = [NSAttributedString.Key.foregroundColor : UIColor.gray]
     let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
     
+    @IBOutlet weak var total: UILabel!
+    @IBOutlet weak var subTotal: UILabel!
     @IBOutlet var scores: [UILabel]!
     @IBOutlet var savedDicesImageView: [UIImageView]!
     @IBOutlet var currentDicesImages: [UIImageView]!
+    @IBOutlet weak var currentTurnCount: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,6 +170,9 @@ class ViewController: UIViewController {
                 model.selectScore(at: index)
             }
         }
+        subTotal.text = "\(model.subTotal)"
+        total.text = "\(model.totalScore)"
+        currentTurnCount.text = "Turn : \(model.currentTurn) / 12"
         updateScore()
     }
     

@@ -24,17 +24,45 @@ struct YachtModel {
             }
         }
     }
+    
+    var currentTurn = 1
 
     var actualScore : [Int?] = [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]
     var tmpScore = [0,0,0,0,0,0,0,0,0,0,0,0]
     var newTurn : Bool{
-        get{
+        mutating get{
             for score in tmpScore{
                 if score != 0{
                     return false
                 }
             }
+            currentTurn += 1
             return true
+        }
+    }
+    
+    var totalScore : Int {
+        get{
+            var tmpScore = 0
+            for optionalScore in actualScore{
+                if let score = optionalScore{
+                    tmpScore += score
+                }
+            }
+            return tmpScore
+        }
+    }
+    var subTotal : Int{
+        get{
+            var tmpScore = 0
+            for index in actualScore.indices{
+                if index < 6{
+                    if let score = actualScore[index]{
+                        tmpScore += score
+                    }
+                }
+            }
+            return tmpScore
         }
     }
    
@@ -177,18 +205,32 @@ extension YachtModel{
         
         
         // large straight
-        for index in totalDice.indices{
-            if index != totalDice.count - 1{
-                if totalDice[index].rawValue + 1 != totalDice[index + 1].rawValue{
-                    tmpScore[9] = 0
-                    break
-                }else{
-                    tmpScore[9] += totalDice[index].rawValue
-                }
+        var largeStraightArray = [0,0,0,0,0,0]
+        for dice in totalDice{
+            if dice.rawValue == 1{
+                largeStraightArray[0] += 1
+            }else if dice.rawValue == 2{
+                largeStraightArray[1] += 1
+            }else if dice.rawValue == 3{
+                largeStraightArray[2] += 1
+            }else if dice.rawValue == 4{
+                largeStraightArray[3] += 1
+            }else if dice.rawValue == 5{
+                largeStraightArray[4] += 1
+            }else if dice.rawValue == 6{
+                largeStraightArray[5] += 1
             }
-            
         }
         
+        if largeStraightArray[0] > 0 && largeStraightArray[1] > 0 && largeStraightArray[2] > 0 && largeStraightArray[3] > 0 && largeStraightArray[4] > 0{
+            tmpScore[9] = tmpScore[6]
+        }else if largeStraightArray[1] > 0 && largeStraightArray[2] > 0 && largeStraightArray[3] > 0 && largeStraightArray[4] > 0 && largeStraightArray[5] > 0{
+            tmpScore[9] = tmpScore[6]
+        }else{
+            tmpScore[9] = 0
+        }
+        
+
         // full house count. (total dice가 정렬된거라 가능함. 정렬 안된 배열이면 불가능.)
         if totalDice[0].rawValue == totalDice[1].rawValue && totalDice[1].rawValue ==  totalDice[2].rawValue && totalDice[3].rawValue == totalDice[4].rawValue{
             tmpScore[10] = (totalDice[0].rawValue * 3) + (totalDice[4].rawValue * 2)
@@ -226,7 +268,7 @@ extension YachtModel{
 // 6       => choose done
 // 7       => four of a kind done
 // 8       => small straight done
-// 9       => large straigt
+// 9       => large straigt  done.
 // 10      => full house. 고칠거 좀 있음 full house count. (total dice가 정렬된거라 가능함. 정렬 안된 배열이면 불가능.)
 // 11      => yachu done
 //

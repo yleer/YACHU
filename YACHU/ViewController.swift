@@ -98,7 +98,15 @@ class ViewController: UIViewController {
                 }
             }
         }
+        updateSubAndTotal()
     }
+    
+    private func updateSubAndTotal(){
+        subTotal.text = "\(currentPlayer.subTotal)"
+        total.text = "\(currentPlayer.totalScore)"
+    }
+    
+    // total 이랑 subtotal 같이 변경하게 해야 됨
     
     
     @objc func tapToRemove(_ gesture : UITapGestureRecognizer){
@@ -158,9 +166,6 @@ class ViewController: UIViewController {
             }
         }
     }
-
-    
-    
     
     // MARK: need to make animation when turn changes.
     @objc func scoreTap(_ gesture : UITapGestureRecognizer){
@@ -170,73 +175,79 @@ class ViewController: UIViewController {
             }
         }
         
-        subTotal.text = "\(currentPlayer.subTotal)"
-        total.text = "\(currentPlayer.totalScore)"
-        currentTurnCount.text = "Turn : \(currentPlayer.currentTurn) / 12"
-        
         updateScore() // 현재 턴에 대한 점수 변경
         updateUI()
         
         // 턴 변경
-        if currentPlayer === firstPlayer{
-            currentPlayer = secondPlayer
-            //
-            let firstPlayerTurnSlider = UIView(frame: CGRect(x: 0, y: 400, width: 100, height: 100))
-            firstPlayerTurnSlider.backgroundColor = .brown
-            let firstPlayerTurnLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-            firstPlayerTurnLabel.text = "Second Player's turn."
-            firstPlayerTurnSlider.addSubview(firstPlayerTurnLabel)
-            view.addSubview(firstPlayerTurnSlider)
-            
-            
-            UIViewPropertyAnimator.runningPropertyAnimator(
-                withDuration: 1,
-                delay: 0,
-                options: [],
-                animations: {
-                    firstPlayerTurnSlider.frame = CGRect(x: 500, y: 400, width: 100, height: 100)
-                },
-                completion: { finished in
-                    firstPlayerTurnSlider.removeFromSuperview()
-                }
-            )
-            
-        }else{
-            currentPlayer = firstPlayer
-            //
-            
-            let firstPlayerTurnSlider = UIView(frame: CGRect(x: 0, y: 400, width: 100, height: 100))
-            firstPlayerTurnSlider.backgroundColor = .brown
-            let firstPlayerTurnLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-            firstPlayerTurnLabel.text = "First Player's turn."
-            firstPlayerTurnSlider.addSubview(firstPlayerTurnLabel)
-            view.addSubview(firstPlayerTurnSlider)
-            
-            
-            UIViewPropertyAnimator.runningPropertyAnimator(
-                withDuration: 1,
-                delay: 0,
-                options: [],
-                animations: {
-                    firstPlayerTurnSlider.frame = CGRect(x: 500, y: 400, width: 100, height: 100)
-                },
-                completion: { finished in
-                    firstPlayerTurnSlider.removeFromSuperview()
-                }
-            )
-            
-            
-            
-        }
+        nextTurn()
+        
         numberOfTurnLeft.text = "3 Left"
         // 다음 턴에 대한 점수 보이기.
         updateScore()
     }
     
     
-    // animate 3 left
-    // animate or show next player every time turn changes.
+
     
+    private func nextTurn(){
+        let playerTurnSlider = UIView(frame: view.midRect)
+        let playerTurnLabel = UILabel(frame: CGRect(x: 0, y: 0, width: playerTurnSlider.frame.width, height: playerTurnSlider.frame.height))
+        playerTurnLabel.textAlignment = .center
+        playerTurnSlider.addSubview(playerTurnLabel)
+        view.addSubview(playerTurnSlider)
+        
+        
+        if currentPlayer === firstPlayer{
+            currentPlayer = secondPlayer
+            playerTurnSlider.backgroundColor = #colorLiteral(red: 0.8184140325, green: 0.933015883, blue: 0.3913968801, alpha: 1)
+            playerTurnLabel.text = "Second Player's turn."
+            UIView.animate(
+                withDuration: 1,
+                delay: 0,
+                options: [.curveEaseIn],
+                animations: {
+                    playerTurnSlider.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                },
+                completion: { finished in
+                    UIView.animate(
+                        withDuration: 1,
+                        animations: {
+                            playerTurnSlider.transform = .identity
+                            playerTurnSlider.alpha = 0
+                        },
+                        completion: { finished in
+                            playerTurnSlider.removeFromSuperview()
+                        }
+                    )
+                }
+            )
+        }else{
+            currentPlayer = firstPlayer
+            playerTurnSlider.backgroundColor = #colorLiteral(red: 1, green: 0.740609467, blue: 1, alpha: 1)
+            playerTurnLabel.text = "First Player's turn."
+            UIView.animate(
+                withDuration: 1,
+                delay: 0,
+                options: [],
+                animations: {
+                    playerTurnSlider.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                },
+                completion: { finished in
+                    UIView.animate(
+                        withDuration: 1,
+                        animations: {
+                            playerTurnSlider.transform = .identity
+                            playerTurnSlider.alpha = 0
+                        },
+                        completion: { finished in
+                            playerTurnSlider.removeFromSuperview()
+                        }
+                    )
+                }
+            )
+        }
+        currentTurnCount.text = "Turn : \(currentPlayer.currentTurn) / 12"
+    }
     
     
     
@@ -295,3 +306,12 @@ class ViewController: UIViewController {
     }
 }
 
+
+
+extension UIView{
+    var midRect : CGRect{
+        get{
+            return CGRect(x: self.frame.midX - self.frame.width / 4, y: self.frame.midY - self.frame.height / 12, width: self.frame.width / 2, height: self.frame.height / 6)
+        }
+    }
+}

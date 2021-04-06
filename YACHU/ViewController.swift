@@ -22,6 +22,14 @@ class ViewController: UIViewController {
     @IBOutlet var currentDicesImages: [UIImageView]!
     @IBOutlet weak var currentTurnCount: UILabel!
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "show score segue"{
+            if let destination = segue.destination as? ScoreViewController{
+                destination.firstPlayer = firstPlayer
+                destination.secondPlayer = secondPlayer
+            }
+        }
+    }
     
     var firstPlayer = YachtModel()
     var secondPlayer = YachtModel()

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8887737B261C3199006519BD /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8887737A261C3199006519BD /* ScoreViewController.swift */; };
 		88E00A9E2612E31E001FDF19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E00A9D2612E31E001FDF19 /* AppDelegate.swift */; };
 		88E00AA02612E31E001FDF19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E00A9F2612E31E001FDF19 /* SceneDelegate.swift */; };
 		88E00AA22612E31E001FDF19 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E00AA12612E31E001FDF19 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8887737A261C3199006519BD /* ScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
 		88E00A9A2612E31E001FDF19 /* YACHU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YACHU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E00A9D2612E31E001FDF19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88E00A9F2612E31E001FDF19 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				88E00AA12612E31E001FDF19 /* ViewController.swift */,
+				8887737A261C3199006519BD /* ScoreViewController.swift */,
 				88E00AA32612E31E001FDF19 /* Main.storyboard */,
 				88E00AA62612E31F001FDF19 /* Assets.xcassets */,
 				88E00AB82612E505001FDF19 /* YachtModel.swift */,
@@ -156,6 +159,7 @@
 				88E00ABC2612E53C001FDF19 /* Dice.swift in Sources */,
 				88E00A9E2612E31E001FDF19 /* AppDelegate.swift in Sources */,
 				88E00AA02612E31E001FDF19 /* SceneDelegate.swift in Sources */,
+				8887737B261C3199006519BD /* ScoreViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

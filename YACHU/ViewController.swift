@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     let attributedTextForTemp = [NSAttributedString.Key.foregroundColor : UIColor.gray]
     let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
     
+    @IBOutlet weak var currentPlayerLabel: UILabel!
     @IBOutlet weak var numberOfTurnLeft: UILabel!
     @IBOutlet weak var total: UILabel!
     @IBOutlet weak var subTotal: UILabel!
@@ -200,6 +201,7 @@ class ViewController: UIViewController {
         if currentPlayer === firstPlayer{
             currentPlayer = secondPlayer
             playerTurnSlider.backgroundColor = #colorLiteral(red: 0.8184140325, green: 0.933015883, blue: 0.3913968801, alpha: 1)
+            currentPlayerLabel.text = "Second Player"
             playerTurnLabel.text = "Second Player's turn."
             UIView.animate(
                 withDuration: 1,
@@ -224,6 +226,7 @@ class ViewController: UIViewController {
         }else{
             currentPlayer = firstPlayer
             playerTurnSlider.backgroundColor = #colorLiteral(red: 1, green: 0.740609467, blue: 1, alpha: 1)
+            currentPlayerLabel.text = "First Player"
             playerTurnLabel.text = "First Player's turn."
             UIView.animate(
                 withDuration: 1,

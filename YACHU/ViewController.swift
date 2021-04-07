@@ -83,6 +83,14 @@ class ViewController: UIViewController {
         view.backgroundColor = UIColor(patternImage: UIImage(named: "board2.png") ?? UIImage())
         scoreBoardView.backgroundColor = UIColor(patternImage: UIImage(named: "board1.png") ?? UIImage())
         
+        
+        for dice in currentDicesImages{
+            view.bringSubviewToFront(dice)
+        }
+        for dice in savedDicesImageView{
+            view.bringSubviewToFront(dice)
+        }
+        
     }
     
     

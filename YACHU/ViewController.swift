@@ -11,8 +11,10 @@ class ViewController: UIViewController {
     
     // score label attributes.
     let attributedTextForTemp = [NSAttributedString.Key.foregroundColor : UIColor.gray]
+    @IBOutlet weak var scoreBoardView: UIView!
     let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
     
+    @IBOutlet weak var diceBoardView: UIView!
     @IBOutlet weak var currentPlayerLabel: UILabel!
     @IBOutlet weak var numberOfTurnLeft: UILabel!
     @IBOutlet weak var total: UILabel!
@@ -77,8 +79,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         currentPlayer = firstPlayer
         updateScore()
-        
         numberOfTurnLeft.text = "3 Left"
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "board2.png") ?? UIImage())
+        scoreBoardView.backgroundColor = UIColor(patternImage: UIImage(named: "board1.png") ?? UIImage())
+        diceBoardView.backgroundColor = UIColor(patternImage: UIImage(named: "5.png") ?? UIImage())
     }
     
     

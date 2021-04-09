@@ -27,7 +27,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var outerBoard: UIView!
     @IBOutlet weak var innerBoard: UIView!
     
-
+    @IBOutlet weak var constraint1: NSLayoutConstraint!
+    @IBOutlet weak var constraint2: NSLayoutConstraint!
+    @IBOutlet weak var constraint3: NSLayoutConstraint!
+    
+    
+    private func updateConstraints(){
+        let diceWidth = 50
+        let a = (view.frame.width - 60 - 250)  / 4
+        constraint1.constant = a
+        constraint2.constant = a
+        constraint3.constant = a
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "show score segue"{
             if let destination = segue.destination as? ScoreViewController{
@@ -96,9 +109,7 @@ class ViewController: UIViewController {
             view.bringSubviewToFront(dice)
         }
         
-        print("inner : \(innerBoard.frame)")
-        print("outer : \(outerBoard.frame)")
-        print("keep : \(keepBoard.frame)")
+        updateConstraints()
         
         
         

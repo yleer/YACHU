@@ -31,7 +31,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var constraint2: NSLayoutConstraint!
     @IBOutlet weak var constraint3: NSLayoutConstraint!
     
-    
     private func updateConstraints(){
         let diceWidth = 50
         let a = (view.frame.width - 60 - 250)  / 4
@@ -110,9 +109,6 @@ class ViewController: UIViewController {
         }
         
         updateConstraints()
-        
-        
-        
     }
     
     
@@ -149,8 +145,6 @@ class ViewController: UIViewController {
         total.text = "\(currentPlayer.totalScore)"
     }
     
-    // total 이랑 subtotal 같이 변경하게 해야 됨
-    
     
     @objc func tapToRemove(_ gesture : UITapGestureRecognizer){
         if let chosenDice = gesture.view as? UIImageView{
@@ -164,13 +158,20 @@ class ViewController: UIViewController {
                             break
                         }
                     }
+                    
+                    let fr = currentDicesImages[tmpIndex].frame
+                    
                     UIViewPropertyAnimator.runningPropertyAnimator(
                         withDuration: 0.5,
                         delay: 0,
                         options: .curveLinear,
                         animations: {
-                            // 위치 계산 해야 겠네..
-                            self.savedDicesImageView[index].frame = self.currentDicesImages[tmpIndex].frame
+                            self.savedDicesImageView[index].frame = CGRect(
+                                x: 0 + self.innerBoard.frame.minX + fr.minX,
+                                y: self.savedDicesImageView[index].frame.maxY + 8 + self.innerBoard.frame.minY + fr.minY,
+                                width: 50,
+                                height: 50
+                            )
                         },
                         completion: { finished in
                             self.currentPlayer.backToRoll(index: index)
@@ -203,7 +204,12 @@ class ViewController: UIViewController {
                     options: .curveLinear,
                     animations: {
                         // 위치 계산 해야 겠네..
-                        self.currentDicesImages[index].frame = CGRect(x: 0 - self.innerBoard.frame.minX + fr.midX , y: 0 - self.innerBoard.frame.minY - 8 - self.keepBoard.frame.height + fr.minY, width: 50, height: 50)
+                        self.currentDicesImages[index].frame = CGRect(
+                            x: 0 - self.innerBoard.frame.minX + fr.minX ,
+                            y: 0 - self.innerBoard.frame.minY - 8 - self.keepBoard.frame.height + fr.minY,
+                            width: 50,
+                            height: 50)
+                        
                     },
                     completion: { finished in
                         self.currentPlayer.keepDice(index: index)

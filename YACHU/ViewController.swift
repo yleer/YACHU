@@ -240,7 +240,6 @@ class ViewController: UIViewController {
         playerTurnSlider.addSubview(playerTurnLabel)
         view.addSubview(playerTurnSlider)
         
-        
         if currentPlayer === firstPlayer{
             currentPlayer = secondPlayer
             playerTurnSlider.backgroundColor = #colorLiteral(red: 0.8184140325, green: 0.933015883, blue: 0.3913968801, alpha: 1)
@@ -266,6 +265,7 @@ class ViewController: UIViewController {
                     )
                 }
             )
+            
         }else{
             currentPlayer = firstPlayer
             playerTurnSlider.backgroundColor = #colorLiteral(red: 1, green: 0.740609467, blue: 1, alpha: 1)
@@ -291,11 +291,12 @@ class ViewController: UIViewController {
                     )
                 }
             )
+            turnNumber += 1
         }
-        currentTurnCount.text = "Turn : \(currentPlayer.currentTurn) / 12"
+        currentTurnCount.text = "Turn : \(turnNumber) / 12"
     }
     
-    
+    private var turnNumber = 1
     
     
     // Dice rolling part.

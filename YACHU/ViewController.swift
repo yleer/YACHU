@@ -95,20 +95,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         currentPlayer = firstPlayer
         updateScore()
+        updateConstraints()
         numberOfTurnLeft.text = "3 Left"
         view.backgroundColor = UIColor(patternImage: UIImage(named: "board2.png") ?? UIImage())
         scoreBoardView.backgroundColor = UIColor(patternImage: UIImage(named: "board1.png") ?? UIImage())
-        
-        
-        
-        for dice in currentDicesImages{
-            view.bringSubviewToFront(dice)
-        }
-        for dice in savedDicesImageView{
-            view.bringSubviewToFront(dice)
-        }
-        
-        updateConstraints()
     }
     
     
@@ -160,7 +150,7 @@ class ViewController: UIViewController {
                     }
                     
                     let fr = currentDicesImages[tmpIndex].frame
-                    
+                    view.sendSubviewToBack(outerBoard)
                     UIViewPropertyAnimator.runningPropertyAnimator(
                         withDuration: 0.5,
                         delay: 0,
@@ -195,7 +185,7 @@ class ViewController: UIViewController {
                         break
                     }
                 }
-                
+                view.sendSubviewToBack(keepBoard)
                 let fr = savedDicesImageView[tmpIndex].frame
                 
                 UIViewPropertyAnimator.runningPropertyAnimator(

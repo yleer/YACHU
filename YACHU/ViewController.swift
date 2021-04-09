@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var scoreBoardView: UIView!
     let attributedTextForScore = [NSAttributedString.Key.foregroundColor : UIColor.black]
     
-    @IBOutlet weak var diceBoardView: UIView!
     @IBOutlet weak var currentPlayerLabel: UILabel!
     @IBOutlet weak var numberOfTurnLeft: UILabel!
     @IBOutlet weak var total: UILabel!
@@ -23,6 +22,11 @@ class ViewController: UIViewController {
     @IBOutlet var savedDicesImageView: [UIImageView]!
     @IBOutlet var currentDicesImages: [UIImageView]!
     @IBOutlet weak var currentTurnCount: UILabel!
+    
+    @IBOutlet weak var keepBoard: UIView!
+    @IBOutlet weak var outerBoard: UIView!
+    @IBOutlet weak var innerBoard: UIView!
+    
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "show score segue"{
@@ -84,12 +88,19 @@ class ViewController: UIViewController {
         scoreBoardView.backgroundColor = UIColor(patternImage: UIImage(named: "board1.png") ?? UIImage())
         
         
+        
         for dice in currentDicesImages{
             view.bringSubviewToFront(dice)
         }
         for dice in savedDicesImageView{
             view.bringSubviewToFront(dice)
         }
+        
+        print("inner : \(innerBoard.frame)")
+        print("outer : \(outerBoard.frame)")
+        print("keep : \(keepBoard.frame)")
+        
+        
         
     }
     
@@ -147,6 +158,7 @@ class ViewController: UIViewController {
                         delay: 0,
                         options: .curveLinear,
                         animations: {
+                            // 위치 계산 해야 겠네..
                             self.savedDicesImageView[index].frame = self.currentDicesImages[tmpIndex].frame
                         },
                         completion: { finished in
@@ -171,12 +183,16 @@ class ViewController: UIViewController {
                         break
                     }
                 }
+                
+                let fr = savedDicesImageView[tmpIndex].frame
+                
                 UIViewPropertyAnimator.runningPropertyAnimator(
                     withDuration: 0.5,
                     delay: 0,
                     options: .curveLinear,
                     animations: {
-                        self.currentDicesImages[index].frame = self.savedDicesImageView[tmpIndex].frame
+                        // 위치 계산 해야 겠네..
+                        self.currentDicesImages[index].frame = CGRect(x: 0 - self.innerBoard.frame.minX + fr.midX , y: 0 - self.innerBoard.frame.minY - 8 - self.keepBoard.frame.height + fr.minY, width: 50, height: 50)
                     },
                     completion: { finished in
                         self.currentPlayer.keepDice(index: index)

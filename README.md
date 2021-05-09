@@ -39,6 +39,9 @@ Solarized dark             |  Solarized Ocean
 
 
 2. 프로젝트를 시작하는 방법
+
+
+
  https://github.com/yleer/YACHU.git 주소를 복사해 Xcode에서 Clone existing project에 기입한다.
 
 

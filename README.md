@@ -38,9 +38,26 @@
 
 2. 프로젝트를 시작하는 방법
 
-
-
  https://github.com/yleer/YACHU.git 주소를 복사해 Xcode에서 Clone existing project에 기입한다.
+ 
+ 
+3. 만든 방법. 
+
+  점수판 만든 방법
+  
+  보드 만든 방법
+    - 두 겹의 UIView를 이용하여 색만 다르게 하여 보드와 비슷한 모양을 만들었다.
+  
+  주사위 만든 방법
+    - 주사위들은 ImageView 객체들로 선택된 주사위를 이동시키는 것은 UIViewPropertyAnimator로 선택된 주사위의 x, y 좌표를 변화시키는 것으로 이동하는 효과를 주었다.
+    - 주사위를 돌릴 때는 UIView.animate를 이용하여 원래의 크기보다 5배 커지고, 한바퀴 돌면서 오른쪽으로 50만큼 가는 효과를 통해 주사위가 돌아가는 효과를 구현하였다.
+
+                    dice.transform = CGAffineTransform(scaleX: 5, y: 5)
+                    dice.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+                    dice.transform = CGAffineTransform(translationX: 50, y: 0)
+        
+        주사위 돌아가는 효과는 https://github.com/revolalex/IOS-SWIFT-Animation-RIsk-Dice 참고함.
+  
 
 
 

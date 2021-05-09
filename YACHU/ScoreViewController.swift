@@ -19,8 +19,12 @@ class ScoreViewController: UIViewController {
     @IBOutlet weak var secondPlayerSubTotal: UILabel!
     @IBOutlet weak var secondPlayerTotal: UILabel!
     
+    @IBOutlet weak var viewToShowBackGroubd: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewToShowBackGroubd.backgroundColor = UIColor(patternImage: UIImage(named: "board2.png") ?? UIImage())
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "board2.png") ?? UIImage())
         updateScore()
     }
     

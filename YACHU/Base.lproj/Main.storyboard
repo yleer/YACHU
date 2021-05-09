@@ -3001,6 +3001,7 @@
                         <outlet property="firstPlayerTotal" destination="L0r-2t-obD" id="MfT-I6-F13"/>
                         <outlet property="secondPlayerSubTotal" destination="6WB-M3-C8Q" id="WXW-ev-74j"/>
                         <outlet property="secondPlayerTotal" destination="5DK-fP-oc2" id="cdx-1k-B3Q"/>
+                        <outlet property="viewToShowBackGroubd" destination="WLM-QK-cIk" id="ZaW-Qt-ft3"/>
                         <outletCollection property="firstPlayerScoreLabels" destination="tiA-9G-lYa" collectionClass="NSMutableArray" id="SHH-YL-j1K"/>
                         <outletCollection property="firstPlayerScoreLabels" destination="HpF-dr-SbW" collectionClass="NSMutableArray" id="dfT-YI-rtU"/>
                         <outletCollection property="firstPlayerScoreLabels" destination="OvQ-2t-tRP" collectionClass="NSMutableArray" id="Ylg-yj-Z4i"/>

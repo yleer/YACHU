@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainGameViewController: UIViewController {
     
     // score label attributes.
     let attributedTextForTemp = [NSAttributedString.Key.foregroundColor : UIColor.gray]

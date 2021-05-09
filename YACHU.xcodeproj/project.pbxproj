@@ -10,7 +10,7 @@
 		8887737B261C3199006519BD /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8887737A261C3199006519BD /* ScoreViewController.swift */; };
 		88E00A9E2612E31E001FDF19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E00A9D2612E31E001FDF19 /* AppDelegate.swift */; };
 		88E00AA02612E31E001FDF19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E00A9F2612E31E001FDF19 /* SceneDelegate.swift */; };
-		88E00AA22612E31E001FDF19 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E00AA12612E31E001FDF19 /* ViewController.swift */; };
+		88E00AA22612E31E001FDF19 /* MainGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E00AA12612E31E001FDF19 /* MainGameViewController.swift */; };
 		88E00AA52612E31E001FDF19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88E00AA32612E31E001FDF19 /* Main.storyboard */; };
 		88E00AA72612E31F001FDF19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88E00AA62612E31F001FDF19 /* Assets.xcassets */; };
 		88E00AAA2612E31F001FDF19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88E00AA82612E31F001FDF19 /* LaunchScreen.storyboard */; };
@@ -23,7 +23,7 @@
 		88E00A9A2612E31E001FDF19 /* YACHU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YACHU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E00A9D2612E31E001FDF19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88E00A9F2612E31E001FDF19 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		88E00AA12612E31E001FDF19 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		88E00AA12612E31E001FDF19 /* MainGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGameViewController.swift; sourceTree = "<group>"; };
 		88E00AA42612E31E001FDF19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		88E00AA62612E31F001FDF19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88E00AA92612E31F001FDF19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 		88E00A9C2612E31E001FDF19 /* YACHU */ = {
 			isa = PBXGroup;
 			children = (
-				88E00AA12612E31E001FDF19 /* ViewController.swift */,
+				88E00AA12612E31E001FDF19 /* MainGameViewController.swift */,
 				8887737A261C3199006519BD /* ScoreViewController.swift */,
 				88E00AA32612E31E001FDF19 /* Main.storyboard */,
 				88E00AA62612E31F001FDF19 /* Assets.xcassets */,
@@ -154,7 +154,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88E00AA22612E31E001FDF19 /* ViewController.swift in Sources */,
+				88E00AA22612E31E001FDF19 /* MainGameViewController.swift in Sources */,
 				88E00AB92612E505001FDF19 /* YachtModel.swift in Sources */,
 				88E00ABC2612E53C001FDF19 /* Dice.swift in Sources */,
 				88E00A9E2612E31E001FDF19 /* AppDelegate.swift in Sources */,

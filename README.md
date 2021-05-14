@@ -12,7 +12,7 @@
   
     친구와 함께 심심한 시간을 보내고 있을때 어디서든 간다한 게임을 즐길 수 있게 하기 위해 야추게임을 아이폰 어플로 구현하였다.
     
-  야추 Rule - https://namu.wiki/w/%EC%9A%94%ED%8A%B8(%EA%B2%8C%EC%9E%84)?from=Yacht%20Dice 참고.
+  야추 규칙 - https://namu.wiki/w/%EC%9A%94%ED%8A%B8(%EA%B2%8C%EC%9E%84)?from=Yacht%20Dice 참고.
   
   이 프로젝트는 어떻게 작동하는가
   

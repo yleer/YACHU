@@ -9,7 +9,8 @@
 
  
 ### Purpose of the project
-+ 친구와 함께 심심한 시간을 보내고 있을때 어디서든 간다한 게임을 즐길 수 있게 하기 위해 야추게임을 아이폰 어플로 구현하였다. 
++ While spending time with friends or family, there will be times when there is nothing to do. So boring that wish there is something to do, but all they have is a smart phone.
++ To make some fun, using smart phone I planned to make Yacht game in smart phone. I wish some of people will enjoy this game.
     
   야추 규칙 - https://namu.wiki/w/%EC%9A%94%ED%8A%B8(%EA%B2%8C%EC%9E%84)?from=Yacht%20Dice 참고.
   

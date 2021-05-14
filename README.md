@@ -10,13 +10,14 @@
 
 
  
-  이 프로젝트는 무엇을 위한 것인가
-  
-    친구와 함께 심심한 시간을 보내고 있을때 어디서든 간다한 게임을 즐길 수 있게 하기 위해 야추게임을 아이폰 어플로 구현하였다.
+### Purpose of the project
+ 친구와 함께 심심한 시간을 보내고 있을때 어디서든 간다한 게임을 즐길 수 있게 하기 위해 야추게임을 아이폰 어플로 구현하였다. 
     
   야추 규칙 - https://namu.wiki/w/%EC%9A%94%ED%8A%B8(%EA%B2%8C%EC%9E%84)?from=Yacht%20Dice 참고.
   
-  이 프로젝트는 어떻게 작동하는가
+### How the project is used
+
+Basically this project works same as the real two player Yatc Game. As the picture above there is a roll button, which rolls the dices. After the player rolls the dice player has a choice to either 
   
     이 게임은 2인이 하는 야츄게임으로 기본적인 방법은 실제 야츄 게임과 동일하다.
     위 사진에서와 같이 주사위를 굴릴 수 있는 roll 버튼이 있다. 주사위를 굴리면 원하는 주사위들을 선택함으로 저장할 수 있다. 

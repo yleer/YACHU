@@ -1,7 +1,7 @@
 # YACHU
 
 
-1. 프로젝트의 목적 및 설명
+About The Project
 
 
 <img src="https://user-images.githubusercontent.com/48948578/117566071-731ec200-b0ef-11eb-83a5-39e8826a5bf1.gif" width="300" height="600" />  |  <img width="300" height="600" alt="스크린샷 2021-05-09 오후 5 46 10" src="https://user-images.githubusercontent.com/48948578/117565873-94cb7980-b0ee-11eb-8631-5d14c2c20260.png">
@@ -25,7 +25,7 @@
   
 
 
-2. Installation
+Installation
 
 
    Clone the repo
@@ -34,7 +34,7 @@
     https://github.com/yleer/YACHU.git 
  
  
-3. 만든 방법. 
+만든 방법. 
 
   점수판 만든 방법
     - UIView들을 stack에 담아 구현하였다. 점수판의 구분 선 같은 경우 UIView의 width혹은 height를 1로 설정하여 stack 안에 둠으로 구현하였다.

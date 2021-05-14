@@ -9,8 +9,7 @@
 
  
 ### Purpose of the project
-+ While spending time with friends or family, there will be times when there is nothing to do. So boring that wish there is something to do, but all they have is a smart phone.
-+ To make some fun, using smart phone I planned to make Yacht game in smart phone. I wish some of people will enjoy this game.
++ While spending time with friends or family, there will be times when there is nothing to do. So boring that wish there is something to do, but all they have is a smart phone. To make some fun, using smart phone I planned to make Yacht game in smart phone. I wish some of people will enjoy this game.
     
   야추 규칙 - https://namu.wiki/w/%EC%9A%94%ED%8A%B8(%EA%B2%8C%EC%9E%84)?from=Yacht%20Dice 참고.
   

@@ -9,15 +9,15 @@
 
  
 ### Purpose of the project
->친구와 함께 심심한 시간을 보내고 있을때 어디서든 간다한 게임을 즐길 수 있게 하기 위해 야추게임을 아이폰 어플로 구현하였다. 
++친구와 함께 심심한 시간을 보내고 있을때 어디서든 간다한 게임을 즐길 수 있게 하기 위해 야추게임을 아이폰 어플로 구현하였다. 
     
   야추 규칙 - https://namu.wiki/w/%EC%9A%94%ED%8A%B8(%EA%B2%8C%EC%9E%84)?from=Yacht%20Dice 참고.
   
 ### How the project is used
 
->Basically this project works same as the real two player Yatc Game. As the picture above there is a roll button, which rolls the dice. When the player rolls the dice, player has a choice to either roll again or select dice in the board to keep. If the player wants to keep the dice, player can simply touch the dice he wants to keep. If the player want to disselect the dice, player can just select the dice in the deck to disselct. The player continues this process three times or until gets the dice set he wants. After the player is satisfied with the dice set or three times has passed, the player can choose the score in the score board to confirm his points and ends the turn.
++Basically this project works same as the real two player Yatc Game. As the picture above there is a roll button, which rolls the dice. When the player rolls the dice, player has a choice to either roll again or select dice in the board to keep. If the player wants to keep the dice, player can simply touch the dice he wants to keep. If the player want to disselect the dice, player can just select the dice in the deck to disselct. The player continues this process three times or until gets the dice set he wants. After the player is satisfied with the dice set or three times has passed, the player can choose the score in the score board to confirm his points and ends the turn.
 
->In the Main View Controller(First image above) player can see only the current player's score board. However, while in one player's turn the player might want to see other player's score. In this case, player can see other player's score by tapping see score button on the top of the score board. By tapping this button, it leads to Score Board View Controller(Second image above), which shows both player's score boards.
++In the Main View Controller(First image above) player can see only the current player's score board. However, while in one player's turn the player might want to see other player's score. In this case, player can see other player's score by tapping see score button on the top of the score board. By tapping this button, it leads to Score Board View Controller(Second image above), which shows both player's score boards.
 
 
 ## Installation

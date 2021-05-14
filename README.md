@@ -26,7 +26,11 @@
 
 
 2. Installation
+
+
    Clone the repo
+   
+   
     https://github.com/yleer/YACHU.git 
  
  

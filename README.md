@@ -17,7 +17,9 @@
   
 ### How the project is used
 
-Basically this project works same as the real two player Yatc Game. As the picture above there is a roll button, which rolls the dices. After the player rolls the dice player has a choice to either 
+Basically this project works same as the real two player Yatc Game. As the picture above there is a roll button, which rolls the dice. When the player rolls the dice, player has a choice to either roll again or select dice in the board to keep. If the player wants to keep the dice, player can simply touch the dice he wants to keep. If the player want to disselect the dice, player can just select the dice in the deck to disselct. The player continues this process three times or until get the dice set he wants. After the player is satisfied with the dices set or three times has passed, the player can choose the score in the score board to confirm his points and ends the turn.
+
+In the Main View Controller player can see only the current player's score board. However, while in one player's turn the player might want to see other player's score. In this case, player can see other player's score by tapping see score button on the top of the score board. By tapping this button, it leads to Score Board View Controller, which shows both player's score boards.
   
     이 게임은 2인이 하는 야츄게임으로 기본적인 방법은 실제 야츄 게임과 동일하다.
     위 사진에서와 같이 주사위를 굴릴 수 있는 roll 버튼이 있다. 주사위를 굴리면 원하는 주사위들을 선택함으로 저장할 수 있다. 

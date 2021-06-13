@@ -34,7 +34,6 @@ Clone the repo
 
    
  
- 
 ***
 ### How YACHU is made
 

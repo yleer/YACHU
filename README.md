@@ -11,7 +11,6 @@
 + [Installation](#Installation)
 + [Usage](#Usage)
 + [How FoodChooser is made](#How-FoodChooser-is-made)
-+ [Fixes](#Fixes)
   
   
 ***

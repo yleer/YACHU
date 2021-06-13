@@ -1,7 +1,8 @@
 # YACHU
 
 While spending time with friends or family, there are some times when there is nothing to do. So boring that wish there is something to do, but all they have is a smart phone. To make some fun, using smart phone I planned to make Yacht game in smart phone. I wish some people will enjoy this game.
-+ Yacht gmae rule - https://namu.wiki/w/%EC%9A%94%ED%8A%B8(%EA%B2%8C%EC%9E%84)?from=Yacht%20Dice 
+
+    Yacht gmae rule - https://namu.wiki/w/%EC%9A%94%ED%8A%B8(%EA%B2%8C%EC%9E%84)?from=Yacht%20Dice 
 
 <img src="https://user-images.githubusercontent.com/48948578/117566071-731ec200-b0ef-11eb-83a5-39e8826a5bf1.gif" width="300" height="600" />  |  <img width="300" height="600" alt="스크린샷 2021-05-09 오후 5 46 10" src="https://user-images.githubusercontent.com/48948578/117565873-94cb7980-b0ee-11eb-8631-5d14c2c20260.png">
 

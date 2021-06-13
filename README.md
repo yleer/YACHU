@@ -7,7 +7,11 @@
 
 
 # Contents
-  
++ [Why?](#why)
++ [Installation](#Installation)
++ [Usage](#Usage)
++ [How FoodChooser is made](#How-FoodChooser-is-made)
++ [Fixes](#Fixes)
   
 ### How the project is used
 

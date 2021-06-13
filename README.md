@@ -20,10 +20,14 @@
   
 ***
 ### Installation
+Install the project.
+> + Clone the project.    
 
-Clone the repo   
+    https://github.com/yleer/YACHU.git  
+> + Or download the zip file.
 
-    https://github.com/yleer/YACHU.git 
+
+    
   
 ***
 ### Usage
